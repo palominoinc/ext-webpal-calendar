@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<README id="READ996hg2_ATaAJ" lang="any" webpalschematype="wpHtml"><h1>Events Calendar</h1>
+
+<p>This extension provides an<ch value="nbsp"/><strong>events</strong><ch value="nbsp"/>node which can be used to manage any number of events.<ch value="nbsp"/></p>
+
+<p>Also provides a calendar widget to dynamically display these events.</p>
+
+<h2>Usage</h2>
+
+<ol><li>After importing the extension, reload the WebPal UI.</li>
+	<li>Insert an<ch value="nbsp"/><strong>events</strong><ch value="nbsp"/>node into any page.</li>
+	<li>Populate the events node with any number of events<br/><img alt="" data-file-id="2316811574433126" src="2316811574433126" style="vertical-align:bottom;" title="" width="500"/></li>
+	<li>To render the calendar, apply templates for the events node, using mode<ch value="nbsp"/><strong>as-calendar</strong>:<img alt="" data-file-id="2175079650824919" src="2175079650824919" style="vertical-align:bottom;" title="" width="500"/></li>
+	<li>The calendar widget will show up as such:<br/><img alt="" data-file-id="5136328519015046" src="5136328519015046" style="vertical-align:bottom;" title="" width="500"/></li>
+</ol><h2>Coming Soon</h2>
+
+<ol><li>define external sources for events, such as google cal</li>
+	<li>create database storage for events, allowing for webuser-generated/maintained<ch value="nbsp"/>events</li>
+</ol><p><ch value="nbsp"/></p>
+</README>
