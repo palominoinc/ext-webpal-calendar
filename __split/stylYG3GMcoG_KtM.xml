@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<stylesheet id="stylYG3GMcoG_KtM" lang="any" name="calendar-events-xsl" show-in="main" webpalschematype="wpAppStylesheet"><![CDATA[<?xml version="1.0"?>
+<!DOCTYPE xsl:stylesheet [
+<!ENTITY nbsp "&#160;" >
+]>
+
+<!-- (c) 2001-present All Copyrights Palomino System Innovations Inc. -->
+
+<xsl:stylesheet
+                version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:php="http://php.net/xsl"
+                >
+
+  <!-- render events as-is (a list?) 
+  *** do nothing for now 
+-->
+
+  <xsl:template match="events"></xsl:template>
+
+  <xsl:template match="event" mode="as-json">
+    {
+    title: '<xsl:value-of select="title"/>',
+    start: $.fullCalendar.moment('<xsl:value-of select="php:function('WPXSL::formatDate', @start-date)"/>T<xsl:value-of select="php:function('WPXSL::formatTime', @start-time)"/>'),
+    end: $.fullCalendar.moment('<xsl:value-of select="php:function('WPXSL::formatDate', @end-date)"/>T<xsl:value-of select="php:function('WPXSL::formatTime', @end-time)"/>'),
+    allDay: <xsl:value-of select="@all-day"/>,
+    className: 'label-<xsl:value-of select="@label"/>',
+    color: '<xsl:value-of select="@color"/>',
+    },
+  </xsl:template>
+
+  <xsl:template match="events" mode="as-calendar">
+    <div id="wp-calendar"></div>
+
+    <script type="text/javascript">
+      /* ------ CALENDAR WIDGET ---------------
+      more info at: http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/
+      */
+
+      jQuery(function($) {
+
+
+      $('#external-events div.external-event').each(function() {
+
+      // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+      // it doesn't need to have a start or end
+      var eventObject = {
+      title: $.trim($(this).text()) // use the element's text as the event title
+      };
+
+      // store the Event Object in the DOM element so we can get to it later
+      $(this).data('eventObject', eventObject);
+
+      // make the event draggable using jQuery UI
+      $(this).draggable({
+      zIndex: 999,
+      revert: true,      // will cause the event to go back to its
+      revertDuration: 0  //  original position after the drag
+      });
+
+      });
+
+
+
+
+      /* initialize the calendar
+      -----------------------------------------------------------------*/
+
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+
+
+      var calendar = $('#wp-calendar').fullCalendar({
+      //isRTL: true,
+      buttonHtml: {
+      prev: '<i class="ace-icon fa fa-chevron-left"></i>',
+      next: '<i class="ace-icon fa fa-chevron-right"></i>'
+      },
+
+      header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+      },
+
+      @if(false)
+      // dynamic events from data model:
+      events: [[ PahealthApp\Source\Events::allJson() ]],
+      @else
+      // events from content tree:
+      events: [<xsl:apply-templates select="./event" mode="as-json"/>],
+      @endif
+
+      editable: false,
+      droppable: false, // this allows things to be dropped onto the calendar !!!
+      drop: function(date, allDay) { 
+      // this function is called when something is dropped
+
+      // retrieve the dropped element's stored Event Object
+      var originalEventObject = $(this).data('eventObject');
+      var $extraEventClass = $(this).attr('data-class');
+
+
+      // we need to copy it, so that multiple events don't have a reference to the same object
+      var copiedEventObject = $.extend({}, originalEventObject);
+
+      // assign it the date that was reported
+      copiedEventObject.start = date;
+      copiedEventObject.allDay = allDay;
+      if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+
+      // render the event on the calendar
+      // the last `true` argument determines if the event "sticks" ()
+      $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+      // is the "remove after drop" checkbox checked?
+      if ($('#drop-remove').is(':checked')) {
+      // if so, remove the element from the "Draggable Events" list
+      $(this).remove();
+      }
+
+      }
+      ,
+      selectable: true,
+      selectHelper: true,
+      select: function(start, end, allDay) {
+
+      bootbox.prompt("New Event Title:", function(title) {
+      if (title !== null) {
+      calendar.fullCalendar('renderEvent',
+      {
+      title: title,
+      start: start,
+      end: end,
+      allDay: allDay,
+      className: 'label-info'
+      },
+      true // make the event "stick"
+      );
+      }
+      });
+
+
+      calendar.fullCalendar('unselect');
+      }
+      ,
+      eventClick: function(calEvent, jsEvent, view) {
+
+      //display a modal
+      var modal = 
+      '<div class="modal fade">\
+      <div class="modal-dialog">\
+        <div class="modal-content">\
+          <div class="modal-body">\
+            <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;"></button>\
+            <form class="no-margin">\
+              <label>Change event name </label>\
+              <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
+              <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
+            </form>\
+          </div>\
+          <div class="modal-footer">\
+            <button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
+            <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+          </div>\
+        </div>\
+      </div>\
+      </div>';
+
+
+      var modal = $(modal).appendTo('body');
+      modal.find('form').on('submit', function(ev){
+      ev.preventDefault();
+
+      calEvent.title = $(this).find("input[type=text]").val();
+      calendar.fullCalendar('updateEvent', calEvent);
+      modal.modal("hide");
+      });
+      modal.find('button[data-action=delete]').on('click', function() {
+      calendar.fullCalendar('removeEvents' , function(ev){
+      return (ev._id == calEvent._id);
+      })
+      modal.modal("hide");
+      });
+
+      modal.modal('show').on('hidden', function(){
+      modal.remove();
+      });
+
+
+      //console.log(calEvent.id);
+      //console.log(jsEvent);
+      //console.log(view);
+
+      }
+
+      });
+
+
+      })
+    </script>
+
+  </xsl:template>
+
+</xsl:stylesheet>]]></stylesheet>

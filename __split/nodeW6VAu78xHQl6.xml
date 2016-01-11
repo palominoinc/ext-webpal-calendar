@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<node-schema id="nodeW6VAu78xHQl6" lang="any" name="events-schema" show-in="main" webpalschematype="wpPageRaw"><![CDATA[<schema xmlns="http://www.palominosys.com/wpschema">
+
+  <complexType name="wpPage-230498234-Events" extends="wpPage">
+    <element name="events" type="wpEvents" folder="extensions"/>
+  </complexType>
+  
+  <complexType name="wpEvents" edittype="table" icon="calendar.png">
+    <element name="event" type="wpEvent"/>
+  </complexType>
+
+  <complexType name="wpEvent" edittype="sheet" icon="calendar.png">
+    <attribute name="start-date" type="wpDate" use="optional"/>
+    <attribute name="start-time" type="wpString" use="optional"/>
+    <attribute name="end-date" type="wpDate" use="optional"/>
+    <attribute name="end-time" type="wpString" use="optional"/> 
+<!-- NOTE: should be wpTime which doesn't work for some reason -->
+    <attribute name="all-day" type="wpString" use="oneof" value="false,true"/>
+    <attribute name="label" type="wpString" use="oneof" value="default,info,danger,warning"/>
+    <attribute name="color" type="wpString" use="oneof" value=",blue,red,green,yellow,orange,brown,black,gray"/>
+    <element name="title" type="wpStringL" use="optional"/>
+    <element name="description" type="wpHtml" use="optional"/>
+  </complexType>
+
+</schema>]]></node-schema>
