@@ -55,7 +55,7 @@
                   editable: false,
                   droppable: false,
 
-                  // this allows things to be dropped onto the calendar !!!
+                  // this allows things to be dropped onto the calendar
                   drop: function(date, allDay) {
                         // this function is called when something is dropped
 
@@ -110,9 +110,6 @@
                                     //render event
                                     calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
 
-                                    // console.log(start.format());
-                                    // console.log(start.format("YYYY-MM-DD"));
-                                    // console.log(start.format("HH:mm:ss"));
                                     //post event
                                      $.ajax({
                                           type: "POST",
@@ -131,10 +128,7 @@
                               }
                         });
 
-
                         calendar.fullCalendar('unselect');
-
-
 
                   }
                   ,
@@ -142,7 +136,7 @@
                   //edits an existing event
                   eventClick: function(calEvent, jsEvent, view) {
 
-                        //display a modal
+                        //display a modal dialog
                         var modal =
                         '<div class="modal fade">\
                         <div class="modal-dialog">\
@@ -168,9 +162,28 @@
                         modal.find('form').on('submit', function(ev){
                               ev.preventDefault();
 
+                              //update event parameters
                               calEvent.title = $(this).find("input[type=text]").val();
                               calendar.fullCalendar('updateEvent', calEvent);
+
+                              //hide the dialog
                               modal.modal("hide");
+
+                              //post event
+                              $.ajax({
+                                    type: "POST",
+                                    url: "/event/edit/" + calEvent.id,
+                                    data: {
+                                          title: calEvent.title,
+                                          start_date: calEvent.start.format("YYYY-MM-DD"),
+                                          start_time: calEvent.start.format("HH:mm:ss"),
+                                          end_date: !calEvent.end ? '' : calEvent.end.format("YYYY-MM-DD"),
+                                          end_time: !calEvent.end ? '' :  calEvent.end.format("HH:mm:ss"),
+                                          allDay: calEvent.allDay,
+                                          className: calEvent.className.toString()
+                                    }
+                              });
+
                         });
                         modal.find('button[data-action=delete]').on('click', function() {
                               calendar.fullCalendar('removeEvents' , function(ev){
@@ -184,7 +197,9 @@
                         });
 
 
-                        // console.log(calEvent.allDay);
+
+                         //console.log(calEvent.className.toString());
+                         //console.log(calEvent);
                         // console.log(jsEvent);
                         // console.log(view);
 
