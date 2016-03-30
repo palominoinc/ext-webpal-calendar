@@ -18,6 +18,7 @@ use DB;
 use Session;
 use Log;
 use Response;
+use Request;
 
 use WebpalCalendar\Models\Event;
 
@@ -120,6 +121,39 @@ class EventController extends BaseController
     // $client->update(Input::all());
 
     // return Redirect::to('/client/edit/'.$client->id)->with('message', "Client: <strong>{$client->fullname()}</strong> has been created");
+
+    $data = Request::get('data');
+    $title = Request::get('title');
+    $start_date = Request::get('start_date');
+    $start_time = Request::get('start_time');
+    $end_date = Request::get('end_date');
+    $end_time = Request::get('end_time');
+    $allDay = Request::get('allDay');
+    $className = Request::get('className');
+
+    Log::info('data:'. $data);
+    Log::info('title:'. $title);
+    Log::info('start date:'. $start_date);
+    Log::info('start time:'. $start_time);
+    Log::info('end date:'. $end_date);
+    Log::info('end time:'. $end_time);
+    Log::info('allDay:'. $allDay);
+
+    $event = new Event();
+    $event->update(array(
+    	'title' => $title,
+    	// 'start_date'=> date('YYYY-MM-DD', strtotime(start_date)),
+    	// 'start_time'=> date('HH:mm:ss', strtotime(start_time)),
+    	// 'end_date'=> date('YYYY-MM-DD', strtotime(end_date)),
+    	// 'end_time'=> date('HH:mm:ss', strtotime(end_time)),
+
+    	'start_date'=> date('Y-m-d', strtotime($start_date)),
+    	'start_time'=> date('H:i:s',strtotime($start_time)),
+    	'end_date'=> date('Y-m-d', strtotime($end_date)),
+    	'end_time'=> date('H:i:s', strtotime($end_time)),
+    	'allDay'=> $allDay == 'true' ? 1 : 0,
+    	'className'=> $className
+    ));
   }
 
   /**

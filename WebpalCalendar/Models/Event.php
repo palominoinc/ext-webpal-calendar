@@ -96,6 +96,15 @@ class Event extends Eloquent
     // $this->email = $data['email'];
     // $this->notes = Purifier::clean(trim($data['notes']));
 
+  	$this->title = $data['title'];
+  	$this->start_time = $data['start_time'];
+  	$this->start_date = $data['start_date'];
+  	$this->end_time = $data['end_time'];
+  	$this->end_date = $data['end_date'];
+  	$this->allDay = $data['allDay'];
+  	$this->className = $data['className'];
+
+
     $this->save();
 
     // $this->logStatus($oldStatus, $data['status']);

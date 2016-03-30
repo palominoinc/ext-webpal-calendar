@@ -94,12 +94,12 @@
                   select: function(start, end, jsEvent, view) {
                         //determine if the event is an all-day event
                         var all_day = !(['fc-bg','fc-time','fc-widget-content','fc-content'].indexOf(jsEvent.target.className) >= 0);
+                        var event;
 
                         //open dialog to create a new event
                         bootbox.prompt("New Event Title:", function(title) {
                               if (title !== null) {
-
-                                    var event = {
+                                    event = {
                                           title: title,
                                           start: start,
                                           end: end,
@@ -110,13 +110,32 @@
                                     //render event
                                     calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
 
-                                    //TODO: post event
+                                    // console.log(start.format());
+                                    // console.log(start.format("YYYY-MM-DD"));
+                                    // console.log(start.format("HH:mm:ss"));
+                                    //post event
+                                     $.ajax({
+                                          type: "POST",
+                                          url: "/event/add",
+                                          data: {
+                                                title: title,
+                                                start_date: start.format("YYYY-MM-DD"),
+                                                start_time: start.format("HH:mm:ss"),
+                                                end_date: end.format("YYYY-MM-DD"),
+                                                end_time: end.format("HH:mm:ss"),
+                                                allDay: all_day,
+                                                className: 'label-info'
+                                          }
+                                    });
 
                               }
                         });
 
 
                         calendar.fullCalendar('unselect');
+
+
+
                   }
                   ,
 
