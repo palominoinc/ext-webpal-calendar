@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="WebpalCalendar\Controllers\EventController@editRecord" filter="isLoggedIn" id="rout3DQC9PhsQUqe" name="editEvent" parameters="" pattern="/event/edit/{id}" verb="post" webpalschematype="wpAppRoute"/>

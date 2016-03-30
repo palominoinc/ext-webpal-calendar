@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="WebpalCalendar\Controllers\EventController@fetchRecords" filter="isLoggedIn" id="routrAWtoi4jhToV" name="fetchEvent" pattern="/event/fetch/{calendar_name}" verb="get" webpalschematype="wpAppRoute"/>

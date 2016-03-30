@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="WebpalCalendar\Controllers\EventController@listRecords" filter="isLoggedIn" id="routEhjNVV56BO_8" name="listEvents" parameters="" pattern="/event/all" verb="get" webpalschematype="wpAppRoute"/>
