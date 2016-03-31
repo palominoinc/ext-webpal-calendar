@@ -159,6 +159,8 @@
 
 
                         var modal = $(modal).appendTo('body');
+
+                        //on save
                         modal.find('form').on('submit', function(ev){
                               ev.preventDefault();
 
@@ -169,7 +171,7 @@
                               //hide the dialog
                               modal.modal("hide");
 
-                              //post event
+                              //post event (saves to the database)
                               $.ajax({
                                     type: "POST",
                                     url: "/event/edit/" + calEvent.id,
@@ -185,13 +187,28 @@
                               });
 
                         });
+
+                        //on delete
                         modal.find('button[data-action=delete]').on('click', function() {
+
+
+                              //delete from the database
+                               $.ajax({
+                                    type: "POST",
+                                    url: "/event/delete/" + calEvent.id,
+                              });
+
+                              //remove the event from the calendar
                               calendar.fullCalendar('removeEvents' , function(ev){
                                     return (ev._id == calEvent._id);
                               })
+
+
+                              //hide the dialog
                               modal.modal("hide");
                         });
 
+                        //on close
                         modal.modal('show').on('hidden', function(){
                               modal.remove();
                         });

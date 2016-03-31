@@ -8,6 +8,7 @@ namespace WebpalCalendar\Models;
 
 use Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Validator;
 use DateTime;
 use Purifier;
@@ -18,9 +19,12 @@ use DB;
 class Event extends Eloquent
 {
 	 use SoftDeletingTrait;
+	 // use SoftDeletes;
+
 
   protected $table = 'webpal_calendar_events';
   public $timestamps = true;
+  protected $dates = ['deleted_at'];
 
   private static $validations = [
                                  // 'lastname' => 'required|max:30',
@@ -109,6 +113,7 @@ class Event extends Eloquent
 
     // $this->logStatus($oldStatus, $data['status']);
   }
+
 
   /**
    * If the status changes, modify the status log

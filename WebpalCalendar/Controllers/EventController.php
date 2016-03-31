@@ -165,7 +165,7 @@ class EventController extends BaseController
 
     // return Redirect::to('client/edit/'.$id)->with('message', "Client: <strong>{$client->fullname()}</strong> has been updated");
 
-     $data = Request::get('data');
+    $data = Request::get('data');
     $title = Request::get('title');
     $start_date = Request::get('start_date');
     $start_time = Request::get('start_time');
@@ -194,7 +194,7 @@ class EventController extends BaseController
    */
   public function deleteRecord($id)
   {
-
+  		Event::destroy($id);
   }
 
   /**

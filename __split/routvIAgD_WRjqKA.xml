@@ -1,2 +1,2 @@
 <?xml version="1.0"?>
-<route controller="WebpalCalendar\Controllers\EventController@deleteRecord" filter="isLoggedIn" id="routvIAgD_WRjqKA" name="deleteEvent" parameters="" pattern="/event/delete/{id}" verb="get" webpalschematype="wpAppRoute"/>
+<route controller="WebpalCalendar\Controllers\EventController@deleteRecord" filter="isLoggedIn" id="routvIAgD_WRjqKA" name="deleteEvent" parameters="" pattern="/event/delete/{id}" verb="post" webpalschematype="wpAppRoute"/>
