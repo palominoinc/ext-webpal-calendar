@@ -4,6 +4,9 @@
 
       jQuery(function($) {
 
+            var button = '<button id="closeButton" type="button" class="btn btn-sm btn-success">Close</button>'
+            $(button).appendTo('.main-section-content');
+            $('#closeButton').hide();
 
             $('#external-events div.external-event').each(function() {
 
@@ -136,6 +139,21 @@
                   //edits an existing event
                   eventClick: function(calEvent, jsEvent, view) {
 
+                        $('#closeButton').show();
+
+                         $.get("/event/edit/" + calEvent.id, function( data ) {
+                                    //$( "body" ).html( data );
+                                    $(data).insertBefore( "#closeButton" );
+                              }
+                        );
+                       // console.log(page);
+                        //console.log(page['responseText']);
+
+                        calendar.hide();
+                        //$(page).appendTo('body');
+
+
+
                         //display a modal dialog
                         var modal =
                         '<div class="modal fade">\
@@ -191,6 +209,9 @@
                         //on delete
                         modal.find('button[data-action=delete]').on('click', function() {
 
+                              calendar.show();
+                              $('#edit-event').remove();
+                              $('#closeButton').hide();
 
                               //delete from the database
                                $.ajax({
@@ -206,6 +227,7 @@
 
                               //hide the dialog
                               modal.modal("hide");
+
                         });
 
                         //on close
@@ -214,6 +236,12 @@
                         });
 
 
+                        $('#closeButton').on('click', function (ev){
+                               ev.preventDefault();
+                              calendar.show();
+                              $('#edit-event').remove();
+                              $('#closeButton').hide();
+                        })
 
                          //console.log(calEvent.className.toString());
                          //console.log(calEvent);
@@ -224,4 +252,6 @@
 
             });
 
+
       })
+

@@ -106,6 +106,9 @@ class EventController extends BaseController
 
     // return View::make('PahealthApp::clients.edit', $data);
 
+  	$event = Event::find($id);
+  	return View::make('PahealthApp::event.edit', ['event' => $event]);
+
   }
 
   /**
