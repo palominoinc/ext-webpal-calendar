@@ -101,6 +101,7 @@ class Event extends Eloquent
     // $this->notes = Purifier::clean(trim($data['notes']));
 
   	$this->title = $data['title'];
+  	$this->description = $data['description'];
   	$this->start_time = $data['start_time'];
   	$this->start_date = $data['start_date'];
   	$this->end_time = $data['end_time'];

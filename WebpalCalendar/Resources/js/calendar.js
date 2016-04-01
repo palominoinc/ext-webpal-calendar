@@ -147,13 +147,19 @@
                         <div class="row ">  \
                               <div class="col-md-12"> \
                                     <form class="form-horizontal"> \
-                                          <div id="datetime">\
                                           <div class="form-group"> \
                                                 <label class="col-md-4 control-label" for="title">Title</label> \
                                                 <div class="col-md-4 input-group"> \
-                                                      <input id="title" name="title" type="text" placeholder="Event title" class="form-control"> \
+                                                      <input id="title" name="title" type="text" placeholder="Event title" class="form-control"/> \
                                                 </div> \
                                           </div> \
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="description">Description</label> \
+                                                <div class="col-md-4 input-group"> \
+                                                      <textarea class="form-control" rows="4" cols="20" id="description" placeholder="Event description"/>\
+                                                </div> \
+                                          </div> \
+                                          <div id="datetime">\
                                           <div class="form-group"> \
                                                 <label class="col-md-4 control-label" for="start_date">Pick a start date</label>\
                                                 <div class="col-md-4 input-group"> \
@@ -164,7 +170,7 @@
                                           <div class="form-group">\
                                                 <label class="col-md-4 control-label" for="start_time">Pick a start time</label>\
                                                 <div class="col-md-4 input-group"> \
-                                                      <input type="text" class="timepicker time start" name="start_time"  value="' +  start.format("HH:mm") + '">\
+                                                      <input type="text" id="start_time" class="form-control timepicker time start" name="start_time"  value="' +  start.format("HH:mm") + '">\
                                                       <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
                                                  </div>\
                                           </div>\
@@ -178,10 +184,13 @@
                                           <div class="form-group">\
                                                 <label class="col-md-4 control-label" for="end_time">Pick a end time</label>\
                                                 <div class="col-md-4 input-group"> \
-                                                      <input type="text" class="timepicker time end" name="end_time"  value="' +  end.format("HH:mm") + '">\
+                                                      <input type="text" id="end_time" class="form-control timepicker time end" name="end_time"  value="' +  end.format("HH:mm") + '">\
                                                       <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
                                                  </div>\
                                           </div>\
+                                          </div>\
+                                          <div>\
+                                          \
                                           </div>\
                                           <div class="modal-footer">\
                                            <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
@@ -227,7 +236,7 @@
                               ev.preventDefault();
                               createNewEvent(event);
                               //hide the dialog
-                             modal.remove();
+                              modal.remove();
                         });
 
                         //on close
@@ -259,12 +268,11 @@
                                     $(data).insertBefore( "#closeButton" );
                               }
                         );
-                       // console.log(page);
+
                         //console.log(page['responseText']);
 
                         calendar.hide();
                         //$(page).appendTo('body');
-
 
 
                         //display a modal dialog
@@ -381,28 +389,45 @@
 
             function createNewEvent(event){
                   var title = $('#title').val();
+                  var description =  $('textarea#description').val();
+                  var start_date = moment($('#start_date').val(), "YYYY-MM-DD");
+                  var start_time = moment($('#start_time').val(), "h:mm a");
+                  var end_date = moment($('#end_date').val(), "YYYY-MM-DD");
+                  var end_time = moment($('#end_time').val(), "h:mm a");
 
-                  //todo: default start in modal to the one picked by dragging, then pull the value from modal to here
-                  if (title !== null) {
+                  if (title !== '') {
                         event.title = title;
+                        event.description = description;
+                        event.start_date = start_date;
+                        event.start_time = start_time;
+                        event.end_time = end_time;
+                        event.end_date = end_date;
 
-                        //render event
-                        calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
+
 
                         //post event
-                         $.ajax({
+                        var response = $.ajax({
                               type: "POST",
                               url: "/event/add",
                               data: {
                                     title:  event.title,
-                                    start_date:  event.start.format("YYYY-MM-DD"),
-                                    start_time:  event.start.format("HH:mm:ss"),
-                                    end_date:  event.end.format("YYYY-MM-DD"),
-                                    end_time:  event.end.format("HH:mm:ss"),
+                                    start_date:  event.start_date.format("YYYY-MM-DD"),
+                                    start_time:  event.start_time.format("HH:mm:ss"),
+                                    end_date:  event.end_date.format("YYYY-MM-DD"),
+                                    end_time:  event.end_time.format("HH:mm:ss"),
                                     allDay:  event.allDay,
-                                    className:  event.className
+                                    className:  event.className,
+                                    description: event.description
+                              },
+                              success: function(){
+                                    //render event
+                                    // calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
+                                    calendar.fullCalendar( 'refetchEvents' );
                               }
                         });
+
+
+
 
 
 

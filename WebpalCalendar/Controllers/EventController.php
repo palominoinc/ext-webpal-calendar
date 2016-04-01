@@ -154,6 +154,7 @@ class EventController extends BaseController
   private function updateEvent(Event $event){
   	$event->update([
                     'title' => Purifier::clean(Input::get('title')),
+                    'description' => Purifier::clean(Input::get('description')),
                     'start_date'=> $this->parseFormatDate(Input::get('start_date'), 'Y-m-d'),
                     'start_time'=> $this->parseFormatDate(Input::get('start_time'), 'H:i:s'),
                     'end_date'=> $this->parseFormatDate(Input::get('end_date'), 'Y-m-d'),
