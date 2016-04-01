@@ -159,6 +159,11 @@
                                                       <textarea class="form-control" rows="4" cols="20" id="description" placeholder="Event description"/>\
                                                 </div> \
                                           </div> \
+                                          <div class="form-group"> \
+                                          <div class="col-md-4 col-md-offset-4 input-group"> \
+                                          <input class="" type="checkbox" id="allDayCheckbox" name="allDayCheckbox" value="AllDay">All Day Event<br>\
+                                          </div>\
+                                          </div>\
                                           <div id="datetime">\
                                           <div class="form-group"> \
                                                 <label class="col-md-4 control-label" for="start_date">Pick a start date</label>\
@@ -206,6 +211,9 @@
                         ';
 
                          var modal = $(modal).appendTo('body');
+
+                        //set all day checkbox
+                         $("#allDayCheckbox").prop('checked', all_day);
 
                         modal.find('.datepicker').datepicker({
                                'showDuration': true,
@@ -394,6 +402,7 @@
                   var start_time = moment($('#start_time').val(), "h:mm a");
                   var end_date = moment($('#end_date').val(), "YYYY-MM-DD");
                   var end_time = moment($('#end_time').val(), "h:mm a");
+                  var allDay = $('#allDayCheckbox').is(':checked');
 
                   if (title !== '') {
                         event.title = title;
@@ -402,7 +411,7 @@
                         event.start_time = start_time;
                         event.end_time = end_time;
                         event.end_date = end_date;
-
+                        event.allDay = allDay;
 
 
                         //post event
