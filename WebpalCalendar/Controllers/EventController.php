@@ -18,7 +18,7 @@ use DB;
 use Session;
 use Log;
 use Response;
-use Request;
+use Purifier;
 
 use WebpalCalendar\Models\Event;
 
@@ -113,6 +113,7 @@ class EventController extends BaseController
 
   /**
    * create a new event record in the database
+   * @return Response (json with status and new event)
    */
   public function addRecord()
   {
@@ -125,37 +126,13 @@ class EventController extends BaseController
 
     // return Redirect::to('/client/edit/'.$client->id)->with('message', "Client: <strong>{$client->fullname()}</strong> has been created");
 
-    $data = Request::get('data');
-    $title = Request::get('title');
-    $start_date = Request::get('start_date');
-    $start_time = Request::get('start_time');
-    $end_date = Request::get('end_date');
-    $end_time = Request::get('end_time');
-    $allDay = Request::get('allDay');
-    $className = Request::get('className');
+    return $this->updateEvent(new Event());
 
-    // Log::info('data:'. $data);
-    // Log::info('title:'. $title);
-    // Log::info('start date:'. $start_date);
-    // Log::info('start time:'. $start_time);
-    // Log::info('end date:'. $end_date);
-    // Log::info('end time:'. $end_time);
-    // Log::info('allDay:'. $allDay);
 
-    $event = new Event();
-    $event->update(array(
-    	'title' => $title,
-    	'start_date'=> date('Y-m-d', strtotime($start_date)),
-    	'start_time'=> date('H:i:s',strtotime($start_time)),
-    	'end_date'=> date('Y-m-d', strtotime($end_date)),
-    	'end_time'=> date('H:i:s', strtotime($end_time)),
-    	'allDay'=> ($allDay == 'true') ? 1 : 0,
-    	'className'=> $className
-    ));
-  }
-
+ }
   /**
    * update event record in the database
+   * @return Response (json with status and new event)
    */
   public function editRecord($id)
   {
@@ -168,32 +145,61 @@ class EventController extends BaseController
 
     // return Redirect::to('client/edit/'.$id)->with('message', "Client: <strong>{$client->fullname()}</strong> has been updated");
 
-    $data = Request::get('data');
-    $title = Request::get('title');
-    $start_date = Request::get('start_date');
-    $start_time = Request::get('start_time');
-    $end_date = Request::get('end_date');
-    $end_time = Request::get('end_time');
-    $allDay = Request::get('allDay');
-    $className = Request::get('className');
+    return $this->updateEvent(Event::find($id));
+  }
 
-	Log::info('allDay:'. $allDay);
+ /** updates event in the database using input params
+ *	@return Response (json with status and new event)
+ */
+  private function updateEvent(Event $event){
+  	$event->update([
+                    'title' => Purifier::clean(Input::get('title')),
+                    'start_date'=> $this->parseFormatDate(Input::get('start_date'), 'Y-m-d'),
+                    'start_time'=> $this->parseFormatDate(Input::get('start_time'), 'H:i:s'),
+                    'end_date'=> $this->parseFormatDate(Input::get('end_date'), 'Y-m-d'),
+                    'end_time'=> $this->parseFormatDate(Input::get('end_time'), 'H:i:s'),
+                    'allDay'=> Input::get('allDay') === 'true',
+                    'className'=> $this->validateClass(Input::get('className')),
+                    ]);
 
-    $event = Event::find($id);
+    return Response::json([ 'status' => 'ok', 'event' => $event->toArray(), ]);
 
-    $event->update(array(
-    	'title' => $title,
-    	'start_date'=> date('Y-m-d', strtotime($start_date)),
-    	'start_time'=> date('H:i:s',strtotime($start_time)),
-    	'end_date'=> date('Y-m-d', strtotime($end_date)),
-    	'end_time'=> date('H:i:s', strtotime($end_time)),
-    	'allDay'=> ($allDay == 'false') ? 0 : 1,
-    	'className'=> $className
-    ));
+
+     // Log::info('data:'. $data);
+    // Log::info('title:'. $title);
+    //Log::info('start date:'. DateTime::createFromFormat('Y-m-d', $start_date)->format('Y-m-d'));
+    // Log::info('start time:'. $start_time);
+    // Log::info('end date:'. $end_date);
+    // Log::info('end time:'. $end_time);
+    // Log::info('allDay:'. $allDay);
+
+  }
+  /**
+   * wraps date in DateTime and formats it to given format
+   * @param  string $date   date to wrap
+   * @param  string $format a format to use
+   * @return  string (formatted)
+   */
+  private function parseFormatDate($date, $format){
+  	return DateTime::createFromFormat($format, $date)->format($format);
+  }
+
+/**
+ * [validateClass description]
+ * @param  string $className a class to check
+ * @return string            a valid class or an empty string
+ */
+  private function validateClass($className){
+  	if (in_array($className, ['label-info'])){
+  		return $className;
+  	}
+  	else{
+  		return '';
+  	}
   }
 
   /**
-   *
+   * deletes an event record with given id from the database
    */
   public function deleteRecord($id)
   {
@@ -284,7 +290,9 @@ class EventController extends BaseController
     // return $options;
   }
 
-  //gets all events from the database
+  /**gets all events from the database
+  * @return array of events
+  */
   public function fetchRecords()
   {
      $events = Event::all();

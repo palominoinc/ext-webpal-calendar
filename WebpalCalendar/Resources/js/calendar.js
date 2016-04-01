@@ -97,39 +97,111 @@
                   select: function(start, end, jsEvent, view) {
                         //determine if the event is an all-day event
                         var all_day = !(['fc-bg','fc-time','fc-widget-content','fc-content'].indexOf(jsEvent.target.className) >= 0);
-                        var event;
+                        var event = {
 
-                        //open dialog to create a new event
-                        bootbox.prompt("New Event Title:", function(title) {
-                              if (title !== null) {
-                                    event = {
-                                          title: title,
                                           start: start,
                                           end: end,
                                           allDay: all_day,
                                           className: 'label-info'
                                     };
 
-                                    //render event
-                                    calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
+                        //open dialog to create a new event
+                        // bootbox.prompt("New Event Title:", function(title) {
+                        //       if (title !== null) {
+                        //             event = {
+                        //                   title: title,
+                        //                   start: start,
+                        //                   end: end,
+                        //                   allDay: all_day,
+                        //                   className: 'label-info'
+                        //             };
 
-                                    //post event
-                                     $.ajax({
-                                          type: "POST",
-                                          url: "/event/add",
-                                          data: {
-                                                title: title,
-                                                start_date: start.format("YYYY-MM-DD"),
-                                                start_time: start.format("HH:mm:ss"),
-                                                end_date: end.format("YYYY-MM-DD"),
-                                                end_time: end.format("HH:mm:ss"),
-                                                allDay: all_day,
-                                                className: 'label-info'
-                                          }
-                                    });
+                        //             //render event
+                        //             calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
 
-                              }
+                        //             //post event
+                        //              $.ajax({
+                        //                   type: "POST",
+                        //                   url: "/event/add",
+                        //                   data: {
+                        //                         title: title,
+                        //                         start_date: start.format("YYYY-MM-DD"),
+                        //                         start_time: start.format("HH:mm:ss"),
+                        //                         end_date: end.format("YYYY-MM-DD"),
+                        //                         end_time: end.format("HH:mm:ss"),
+                        //                         allDay: all_day,
+                        //                         className: 'label-info'
+                        //                   }
+                        //             });
+
+                        //       }
+                        // });
+
+                        var modal ='\
+                        <div class="modal fade">\
+                        <div class="modal-dialog">\
+                        <div class="modal-content">\
+                        <div class="modal-body">\
+                        <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;"></button>\
+                        <div class="no-margin">\
+                        <div class="row ">  \
+                              <div class="col-md-12"> \
+                                    <form class="form-horizontal"> \
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="title">Title</label> \
+                                                <div class="col-md-4"> \
+                                                      <input id="title" name="title" type="text" placeholder="Event title" class="form-control"> \
+                                                      <span class="help-block">Event title goes here</span> \
+                                                </div> \
+                                          </div> \
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="start_date">Pick a start date</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input id="start_date" class="form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd"/>\
+                                                      <label for="start_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>\
+                                                </div>\
+                                          </div>\
+                                          <div class="modal-footer">\
+                                           <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
+                                          <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+                                          </div>\
+                                    </form> \
+                              </div> \
+                        </div>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        ';
+
+                         var modal = $(modal).appendTo('body');
+
+                        modal.find('.datepicker').datepicker();
+
+                        modal.find(".date-picker").on("change", function () {
+                           //maybe some validation
                         });
+
+                        modal.on('shown.bs.modal' , function(){$('#title').focus()});
+
+                        modal.find('form').on('submit', function(ev){
+                              ev.preventDefault();
+                              createNewEvent(event);
+                              //hide the dialog
+                             modal.remove();
+                        });
+
+                        //on close
+                        modal.modal('show').on('hidden', function(){
+                              modal.remove();
+                        });
+
+                        modal.on('hide.bs.modal', function(){
+                              modal.remove();
+                        });
+
+
+
 
                         calendar.fullCalendar('unselect');
 
@@ -163,7 +235,7 @@
                         <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;"></button>\
                         <form class="no-margin">\
                         <label>Change event name </label>\
-                        <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
+                        <input id="title" class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
                         <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
                         </form>\
                         </div>\
@@ -178,16 +250,17 @@
 
                         var modal = $(modal).appendTo('body');
 
+                        $('#title').focus();
+
                         //on save
                         modal.find('form').on('submit', function(ev){
                               ev.preventDefault();
+                              switchToCalendarView();
 
                               //update event parameters
                               calEvent.title = $(this).find("input[type=text]").val();
                               calendar.fullCalendar('updateEvent', calEvent);
 
-                              //hide the dialog
-                              modal.modal("hide");
 
                               //post event (saves to the database)
                               $.ajax({
@@ -204,14 +277,16 @@
                                     }
                               });
 
+                              //remove the dialog
+                              modal.remove();
+
+
                         });
 
                         //on delete
                         modal.find('button[data-action=delete]').on('click', function() {
 
-                              calendar.show();
-                              $('#edit-event').remove();
-                              $('#closeButton').hide();
+                              switchToCalendarView();
 
                               //delete from the database
                                $.ajax({
@@ -224,23 +299,26 @@
                                     return (ev._id == calEvent._id);
                               })
 
-
-                              //hide the dialog
-                              modal.modal("hide");
+                              //remove the dialog
+                              modal.remove();
 
                         });
 
-                        //on close
+                        //get focus on title input
+                        modal.on('shown.bs.modal' , function(){$('#title').focus()});
+
+                        //on close remove modal
                         modal.modal('show').on('hidden', function(){
                               modal.remove();
                         });
+                        modal.on('hide.bs.modal', function(){
+                              modal.remove();
+                        });
 
-
+                        //close button leads back to calendar view
                         $('#closeButton').on('click', function (ev){
-                               ev.preventDefault();
-                              calendar.show();
-                              $('#edit-event').remove();
-                              $('#closeButton').hide();
+                              ev.preventDefault();
+                              switchToCalendarView();
                         })
 
                          //console.log(calEvent.className.toString());
@@ -250,8 +328,46 @@
 
                   }
 
+
+
             });
 
+            function switchToCalendarView(){
+                  calendar.show();
+                  $('#edit-event').remove();
+                  $('#closeButton').hide();
+            }
+
+            function createNewEvent(event){
+                  var title = $('#title').val();
+
+                  //todo: default start in modal to the one picked by dragging, then pull the value from modal to here
+                  if (title !== null) {
+                        event.title = title;
+
+                        //render event
+                        calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
+
+                        //post event
+                         $.ajax({
+                              type: "POST",
+                              url: "/event/add",
+                              data: {
+                                    title:  event.title,
+                                    start_date:  event.start.format("YYYY-MM-DD"),
+                                    start_time:  event.start.format("HH:mm:ss"),
+                                    end_date:  event.end.format("YYYY-MM-DD"),
+                                    end_time:  event.end.format("HH:mm:ss"),
+                                    allDay:  event.allDay,
+                                    className:  event.className
+                              }
+                        });
+
+
+
+                  }
+
+            }
 
       })
 
