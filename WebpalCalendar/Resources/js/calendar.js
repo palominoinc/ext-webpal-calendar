@@ -147,19 +147,41 @@
                         <div class="row ">  \
                               <div class="col-md-12"> \
                                     <form class="form-horizontal"> \
+                                          <div id="datetime">\
                                           <div class="form-group"> \
                                                 <label class="col-md-4 control-label" for="title">Title</label> \
-                                                <div class="col-md-4"> \
+                                                <div class="col-md-4 input-group"> \
                                                       <input id="title" name="title" type="text" placeholder="Event title" class="form-control"> \
-                                                      <span class="help-block">Event title goes here</span> \
                                                 </div> \
                                           </div> \
                                           <div class="form-group"> \
                                                 <label class="col-md-4 control-label" for="start_date">Pick a start date</label>\
                                                 <div class="col-md-4 input-group"> \
-                                                      <input id="start_date" class="form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd"/>\
+                                                      <input id="start_date" class="form-control datepicker date start" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="' + start.format("YYYY-MM-DD") + '"/>\
                                                       <label for="start_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>\
                                                 </div>\
+                                          </div>\
+                                          <div class="form-group">\
+                                                <label class="col-md-4 control-label" for="start_time">Pick a start time</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input type="text" class="timepicker time start" name="start_time"  value="' +  start.format("HH:mm") + '">\
+                                                      <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
+                                                 </div>\
+                                          </div>\
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="end_date">Pick a end date</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input id="end_date" class="form-control datepicker date end" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="' + end.format("YYYY-MM-DD") + '"/>\
+                                                      <label for="end_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>\
+                                                </div>\
+                                          </div>\
+                                          <div class="form-group">\
+                                                <label class="col-md-4 control-label" for="end_time">Pick a end time</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input type="text" class="timepicker time end" name="end_time"  value="' +  end.format("HH:mm") + '">\
+                                                      <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
+                                                 </div>\
+                                          </div>\
                                           </div>\
                                           <div class="modal-footer">\
                                            <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
@@ -176,11 +198,28 @@
 
                          var modal = $(modal).appendTo('body');
 
-                        modal.find('.datepicker').datepicker();
+                        modal.find('.datepicker').datepicker({
+                               'showDuration': true,
+                               'autoclose': true
+                        });
+                        // $('.datepicker').datepicker('update');
+                        // $('.datepicker').val('');
 
-                        modal.find(".date-picker").on("change", function () {
+                        modal.find(".datepicker").on("change", function () {
                            //maybe some validation
                         });
+
+                        //initialize time picker
+                        modal.find('.time').timepicker({
+                          'showDuration': true,
+                          'timeFormat': 'g:i a'
+                        });
+
+
+
+                        // initialize datepair
+                        var basicExampleEl = document.getElementById('datetime');
+                        var datepair = new Datepair(basicExampleEl);
 
                         modal.on('shown.bs.modal' , function(){$('#title').focus()});
 
@@ -196,8 +235,10 @@
                               modal.remove();
                         });
 
-                        modal.on('hide.bs.modal', function(){
-                              modal.remove();
+                        modal.on('hide.bs.modal', function(e){
+                               if (e.target === this){
+                                    modal.remove();
+                               }
                         });
 
 
