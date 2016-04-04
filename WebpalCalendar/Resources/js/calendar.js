@@ -49,7 +49,7 @@
                         right: 'month,agendaWeek,agendaDay'
                   },
 
-                  events: '/event/fetch/all',
+                  events: '/event/fetch',
 
                   editable: false,
                   droppable: false,
@@ -170,7 +170,7 @@
                   //set start day - defaults to today
                   var raw_start_date = $('#start_date').val();
                   if (!raw_start_date){
-                        raw_start_date = date.format('YYYY-MM-DD');
+                        raw_start_date = moment().format('YYYY-MM-DD');
                   }
 
                   //if start time is empty, set to 0:00 am
