@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<route controller="WebpalCalendar\Controllers\EventController@getUserLevel" filter="isLoggedIn" id="routrX2w5x68JPIj" name="userLevel" pattern="/userlevel" verb="get" webpalschematype="wpAppRoute"/>

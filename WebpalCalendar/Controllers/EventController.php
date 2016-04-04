@@ -224,21 +224,21 @@ class EventController extends BaseController
    */
   private function generateWebPalGroupArray($group_name)
   {
-    // $map = [];
+    $map = [];
 
-    // if (! empty($group_name)) {
-    //   $session = Connection::get()->getAdminSession();
-    //   $session->send('listUsers', [
-    //     'search' => $group_name,
-    //     'sort' => 'lastName'
-    //   ]);
+    if (! empty($group_name)) {
+      $session = Connection::get()->getAdminSession();
+      $session->send('listUsers', [
+        'search' => $group_name,
+        'sort' => 'lastName'
+      ]);
 
-    //   foreach ($session->objectlistFromResponse('Result') as $row) {
-    //     $map[(string) $row->id] = $row->name;
-    //   }
-    // }
+      foreach ($session->objectlistFromResponse('Result') as $row) {
+        $map[(string) $row->id] = $row->name;
+      }
+    }
 
-    // return $map;
+    return $map;
   }
 
   /**
@@ -296,10 +296,18 @@ class EventController extends BaseController
   */
   public function fetchRecords()
   {
-     $events = Event::all();
+
+     $level = $this->getLevel();
+     // $level = 4;
+     Log::info('level', $level);
+
+     //get all the events with the level below user's level
+     $events = Event::where('level', '<=', $level)->get();
+
+     //transform start and end date and time to fullCalendar's format
      foreach ($events as $event){
 
-		//set start date and time
+		  //set start date and time
      	$start = $event->start_date;
      	if ($event->start_time){
      		$start = $start.'T'.$event->start_time;
@@ -313,6 +321,33 @@ class EventController extends BaseController
      	}
      	$event->end = $end;
      }
+
   	 return $events;
+  }
+
+  /**
+   * returns the highest level assigned to the user
+   * @return int highest user level
+   */
+  public function getUserLevel(){
+     return  Response::json([ 'status' => 'ok', 'userLevel' => $this->getLevel() ]);
+  }
+
+  private function getLevel(){
+    $user = Connection::userInfo();
+
+    if (strpos( $user['groups'], 'Level 4') !== false){
+      return 4;
+    };
+
+    if (strpos( $user['groups'], 'Level 3') !== false){
+      return 3;
+    };
+
+    if (strpos( $user['groups'], 'Level 2') !== false){
+      return 2;
+    };
+
+    return 1;
   }
 }

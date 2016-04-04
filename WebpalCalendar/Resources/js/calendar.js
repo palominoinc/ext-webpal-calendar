@@ -3,10 +3,10 @@
       */
 
       jQuery(function($) {
-
-            var button = '<button id="closeButton" type="button" class="btn btn-sm btn-success">Close</button>'
-            $(button).appendTo('.main-section-content');
-            $('#closeButton').hide();
+            // //a button to exit the view mode and return to the calendar
+            // var button = '<button id="closeButton" type="button" class="btn btn-sm btn-success">Close</button>'
+            // $(button).appendTo('.main-section-content');
+            // $('#closeButton').hide();
 
             $('#external-events div.external-event').each(function() {
 
@@ -38,7 +38,6 @@
             var d = date.getDate();
             var m = date.getMonth();
             var y = date.getFullYear();
-
 
 
             var calendar = $('#wp-calendar').fullCalendar({
@@ -106,59 +105,9 @@
                                     };
 
                         //generate modal dialog
-                        // var modalString = getModal (event, false);
                         initModal(event, false);
 
-                        // modal = $(modalString).appendTo('body');
-
-                        // //set all day checkbox
-                        //  $("#allDayCheckbox").prop('checked', all_day);
-
-                        // //initialize date picker
-                        // modal.find('.datepicker').datepicker({
-                        //        'showDuration': true,
-                        //        'autoclose': true
-                        // });
-
-                        // modal.find(".datepicker").on("change", function () {
-                        //    //some validation
-                        // });
-
-                        // //initialize time picker
-                        // modal.find('.time').timepicker({
-                        //   'showDuration': true,
-                        //   'timeFormat': 'g:i a'
-                        // });
-
-
-                        // // initialize datepair
-                        // var basicExampleEl = document.getElementById('datetime');
-                        // var datepair = new Datepair(basicExampleEl);
-
-                        // //focus title field when dialog opens
-                        // modal.on('shown.bs.modal' , function(){$('#title').focus()});
-
-                        // //on submit
-                        // modal.find('form').on('submit', function(ev){
-                        //       ev.preventDefault();
-                        //       updateEvent(event);
-                        //       //hide the dialog
-                        //       modal.remove();
-                        // });
-
-                        // //on close
-                        // modal.modal('show').on('hidden', function(){
-                        //       modal.remove();
-                        // });
-
-                        // //if hidden - remove
-                        // modal.on('hide.bs.modal', function(e){
-                        //        if (e.target === this){
-                        //             modal.remove();
-                        //        }
-                        // });
-
-                        calendar.fullCalendar('unselect');
+                        // calendar.fullCalendar('unselect');
 
                   }
                   ,
@@ -166,122 +115,80 @@
                   //edits an existing event
                   eventClick: function(calEvent, jsEvent, view) {
 
-                        //append close button
-                        $('#closeButton').show();
+                        // //append close button
+                        // $('#closeButton').show();
 
-                        //get html for details
-                        //TODO: move the code here, bo need for ajax
-                        $.get("/event/edit/" + calEvent.id, function( data ) {
-                                    //$( "body" ).html( data );
-                                    $(data).insertBefore( "#closeButton" );
-                              }
-                        );
+                        // //get html for details
+                        //
+                        // $.get("/event/edit/" + calEvent.id, function( data ) {
+                        //             //$( "body" ).html( data );
+                        //             $(data).insertBefore( "#closeButton" );
+                        //       }
+                        // );
 
+                        // //hide the calendar
+                        // calendar.hide();
 
-                        //hide the calendar
-                        calendar.hide();
-
-
+                        //generate modal dialog
                         initModal(calEvent, true);
 
-                        // //display a modal dialog
-                        // var modalString = getModal (calEvent, true);
-                        // var modal = $(modalString).appendTo('body');
-
-                        // $('#title').focus();
-
-                        //  //set all day checkbox
-                        //  $("#allDayCheckbox").prop('checked', calEvent.allDay);
-
-                        // //on save
-                        // modal.find('form').on('submit', function(ev){
+                        // //close button leads back to calendar view
+                        // $('#closeButton').on('click', function (ev){
                         //       ev.preventDefault();
                         //       switchToCalendarView();
-
-                        //       updateEvent(calEvent);
-                        //       // //update event parameters
-                        //       // calEvent.title = $(this).find("input[type=text]").val();
-                        //       // calendar.fullCalendar('updateEvent', calEvent);
-
-
-                        //       // //post event (saves to the database)
-                        //       // $.ajax({
-                        //       //       type: "POST",
-                        //       //       url: "/event/edit/" + calEvent.id,
-                        //       //       data: {
-                        //       //             title: calEvent.title,
-                        //       //             start_date: calEvent.start.format("YYYY-MM-DD"),
-                        //       //             start_time: calEvent.start.format("HH:mm:ss"),
-                        //       //             end_date: !calEvent.end ? '' : calEvent.end.format("YYYY-MM-DD"),
-                        //       //             end_time: !calEvent.end ? '' :  calEvent.end.format("HH:mm:ss"),
-                        //       //             allDay: calEvent.allDay,
-                        //       //             className: calEvent.className.toString()
-                        //       //       }
-                        //       // });
-
-                        //       //remove the dialog
-                        //       modal.remove();
-
-
-                        // });
-
-                        // //on delete
-                        // modal.find('button[data-action=delete]').on('click', function() {
-
-                        //       switchToCalendarView();
-
-                        //       //delete from the database
-                        //        $.ajax({
-                        //             type: "POST",
-                        //             url: "/event/delete/" + calEvent.id,
-                        //       });
-
-                        //       //remove the event from the calendar
-                        //       calendar.fullCalendar('removeEvents' , function(ev){
-                        //             return (ev._id == calEvent._id);
-                        //       })
-
-                        //       //remove the dialog
-                        //       modal.remove();
-
-                        // });
-
-                        // //get focus on title input
-                        // modal.on('shown.bs.modal' , function(){$('#title').focus()});
-
-                        // //on close remove modal
-                        // modal.modal('show').on('hidden', function(){
-                        //       modal.remove();
-                        // });
-                        // modal.on('hide.bs.modal', function(){
-                        //       modal.remove();
-                        // });
-
-                        //close button leads back to calendar view
-                        $('#closeButton').on('click', function (ev){
-                              ev.preventDefault();
-                              switchToCalendarView();
-                        })
-
-                         //console.log(calEvent.className.toString());
-                         //console.log(calEvent);
-                        // console.log(jsEvent);
-                        // console.log(view);
+                        // })
 
                   }
-
-
-
             });
 
-            function switchToCalendarView(){
-                  calendar.show();
-                  $('#edit-event').remove();
-                  $('#closeButton').hide();
-            }
+            //-------------------------------------------------------------------------------
+            //----------------------------Functions------------------------------------------
+            //-------------------------------------------------------------------------------
 
+            // function switchToCalendarView(){
+            //       calendar.show();
+            //       $('#edit-event').remove();
+            //       $('#closeButton').hide();
+            // }
+
+            //updates or creates(if there is no id provided) a new event in the database
             function updateEvent(event){
-                  //title - required
+
+                  event = gatherEventDetails(event);
+
+                  var url;
+
+                  if (!!event.id){
+                        url = "/event/edit/" + event.id;
+                  }
+                  else{
+                       url = "/event/add";
+                  }
+
+                  //post event
+                  var response = $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: {
+                              title:  event.title,
+                              start_date:  event.start_date.format("YYYY-MM-DD"),
+                              start_time:  event.start_time.format("HH:mm:ss"),
+                              end_date:  event.end_date.format("YYYY-MM-DD"),
+                              end_time:  event.end_time.format("HH:mm:ss"),
+                              allDay:  event.allDay,
+                              className:  event.className.toString(),
+                              description: event.description
+                        },
+                        success: function(){
+                              //update the calendar (needed to get an event id from the database)
+                              calendar.fullCalendar( 'refetchEvents' );
+                        }
+                  });
+
+            };
+
+            function gatherEventDetails(event){
+                   //title - required
                   var title = $('#title').val();
 
                   //description - optional
@@ -320,50 +227,18 @@
 
                         event.title = title;
                         event.description = description;
-                        event.start_date = moment(raw_start_date, "YYYY-MM-DD");;
+                        event.start_date = moment(raw_start_date, "YYYY-MM-DD");
                         event.start_time = start_time;
                         event.end_time = end_time;
                         event.end_date = end_date;
                         event.allDay = allDay;
 
-                        var url;
-
-                        if (!!event.id){
-                              url = "/event/edit/" + event.id;
-                        }
-                        else{
-                             url = "/event/add";
-                        }
-
-                        //post event
-                        var response = $.ajax({
-                              type: "POST",
-                              url: url,
-                              data: {
-                                    title:  event.title,
-                                    start_date:  event.start_date.format("YYYY-MM-DD"),
-                                    start_time:  event.start_time.format("HH:mm:ss"),
-                                    end_date:  event.end_date.format("YYYY-MM-DD"),
-                                    end_time:  event.end_time.format("HH:mm:ss"),
-                                    allDay:  event.allDay,
-                                    className:  event.className.toString(),
-                                    description: event.description
-                              },
-                              success: function(){
-                                    //render event
-                                    // calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
-                                    calendar.fullCalendar( 'refetchEvents' );
-                              }
-                        });
-
-
-
-
-
-
+                        return event;
                   }
 
+
             }
+
 
             //generates a modal window code
             function getModal (event, needDeleteButton){
@@ -454,6 +329,13 @@
                                                  </div>\
                                           </div>\
                                           </div>\
+                                          <div class="form-group">\
+                                                <label class="col-md-4 control-label" for="end_time">Calendar level</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                <select id="level" class="form-control" name="level">\
+                                                </select>\
+                                                </div>\
+                                          </div>\
                                           <div>\
                                           \
                                           </div>\
@@ -507,6 +389,25 @@
                   var basicExampleEl = document.getElementById('datetime');
                   var datepair = new Datepair(basicExampleEl);
 
+                  //setup calendar level select
+                  var userLevel;
+                  $.get('/userlevel', function(data){
+                        userLevel = data.userLevel;
+                        console.log(data);
+
+                        //init select level options
+                        for (i = 1; i <= userLevel; i++){
+                              $('#level')
+                                    .append($('<option>', {value : i})
+                                    .text(i));
+                        }
+
+                        //select calendar level
+                        $('select option[value=' + event.level + ']').attr("selected",true);
+                  });
+
+
+
                   //focus title field when dialog opens
                   modal.on('shown.bs.modal' , function(){$('#title').focus()});
 
@@ -517,7 +418,7 @@
                         updateEvent(event);
 
                         if (needDeleteButton){
-                              switchToCalendarView();
+                              // switchToCalendarView();
                               calendar.fullCalendar('updateEvent', event);
                         }
 
@@ -541,7 +442,7 @@
                          //on delete
                         modal.find('button[data-action=delete]').on('click', function() {
 
-                              switchToCalendarView();
+                              // switchToCalendarView();
 
                               //delete from the database
                                $.ajax({
