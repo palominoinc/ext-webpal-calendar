@@ -3,10 +3,6 @@
       */
 
       jQuery(function($) {
-            // //a button to exit the view mode and return to the calendar
-            // var button = '<button id="closeButton" type="button" class="btn btn-sm btn-success">Close</button>'
-            // $(button).appendTo('.main-section-content');
-            // $('#closeButton').hide();
 
             $('#external-events div.external-event').each(function() {
 
@@ -104,10 +100,8 @@
                                           className: 'label-info'
                                     };
 
-                        //generate modal dialog
+                        //generate modal dialog without delete button
                         initModal(event, false);
-
-                        // calendar.fullCalendar('unselect');
 
                   }
                   ,
@@ -115,41 +109,15 @@
                   //edits an existing event
                   eventClick: function(calEvent, jsEvent, view) {
 
-                        // //append close button
-                        // $('#closeButton').show();
-
-                        // //get html for details
-                        //
-                        // $.get("/event/edit/" + calEvent.id, function( data ) {
-                        //             //$( "body" ).html( data );
-                        //             $(data).insertBefore( "#closeButton" );
-                        //       }
-                        // );
-
-                        // //hide the calendar
-                        // calendar.hide();
-
-                        //generate modal dialog
+                        //generate modal dialog with delete button
                         initModal(calEvent, true);
-
-                        // //close button leads back to calendar view
-                        // $('#closeButton').on('click', function (ev){
-                        //       ev.preventDefault();
-                        //       switchToCalendarView();
-                        // })
 
                   }
             });
 
-            //-------------------------------------------------------------------------------
-            //----------------------------Functions------------------------------------------
-            //-------------------------------------------------------------------------------
-
-            // function switchToCalendarView(){
-            //       calendar.show();
-            //       $('#edit-event').remove();
-            //       $('#closeButton').hide();
-            // }
+            //-----------------------------------------------------------------------
+            //----------------------------Functions----------------------------------
+            //-----------------------------------------------------------------------
 
             //updates or creates(if there is no id provided) a new event in the database
             function updateEvent(event){
@@ -178,7 +146,8 @@
                               allDay:  event.allDay,
                               className:  event.className.toString(),
                               description: event.description,
-                              level: event.level
+                              level: event.level,
+                              color: event.color
                         },
                         success: function(){
                               //update the calendar (needed to get an event id from the database)
@@ -231,6 +200,22 @@
                   //set level
                   var level = $('#level').val();
 
+                  //set color based on level
+                  var color;
+                  switch (level){
+                        case '2':
+                              color = 'green';
+                              break;
+                        case '3':
+                              color = 'red';
+                              break;
+                        case '4':
+                              color = 'black';
+                              break;
+                        default:
+                              color ='';
+                  }
+
                   event.title = title;
                   event.description = description;
                   event.start_date = moment(raw_start_date, "YYYY-MM-DD");
@@ -239,10 +224,9 @@
                   event.end_date = end_date;
                   event.allDay = allDay;
                   event.level = level;
+                  event.color = color;
 
                   return event;
-
-
 
             }
 

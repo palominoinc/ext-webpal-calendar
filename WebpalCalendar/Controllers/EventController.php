@@ -161,7 +161,8 @@ class EventController extends BaseController
                     'end_time'=> $this->parseFormatDate(Input::get('end_time'), 'H:i:s'),
                     'allDay'=> Input::get('allDay') === 'true',
                     'className'=> $this->validateClass(Input::get('className')),
-                    'level' => intVal(Input::get('level'))
+                    'level' => intVal(Input::get('level')),
+                    'color' => $this->validateColor(Input::get('color'))
                     ]);
 
     return Response::json([ 'status' => 'ok', 'event' => $event->toArray(), ]);
@@ -198,6 +199,15 @@ class EventController extends BaseController
   	else{
   		return '';
   	}
+  }
+
+  private function validateColor ($color){
+    if (in_array($color, ['red', 'green', 'blue', 'black', 'yellow', 'grey'])){
+      return $color;
+    }
+    else{
+      return '';
+    }
   }
 
   /**
