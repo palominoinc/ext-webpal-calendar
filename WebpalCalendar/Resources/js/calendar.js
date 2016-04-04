@@ -40,6 +40,7 @@
             var y = date.getFullYear();
 
 
+
             var calendar = $('#wp-calendar').fullCalendar({
                   //isRTL: true,
                   buttonHtml: {
@@ -98,168 +99,64 @@
                         //determine if the event is an all-day event
                         var all_day = !(['fc-bg','fc-time','fc-widget-content','fc-content'].indexOf(jsEvent.target.className) >= 0);
                         var event = {
-
                                           start: start,
                                           end: end,
                                           allDay: all_day,
                                           className: 'label-info'
                                     };
 
-                        //open dialog to create a new event
-                        // bootbox.prompt("New Event Title:", function(title) {
-                        //       if (title !== null) {
-                        //             event = {
-                        //                   title: title,
-                        //                   start: start,
-                        //                   end: end,
-                        //                   allDay: all_day,
-                        //                   className: 'label-info'
-                        //             };
+                        //generate modal dialog
+                        // var modalString = getModal (event, false);
+                        initModal(event, false);
 
-                        //             //render event
-                        //             calendar.fullCalendar('renderEvent', event, true); // true - make the event "stick"
+                        // modal = $(modalString).appendTo('body');
 
-                        //             //post event
-                        //              $.ajax({
-                        //                   type: "POST",
-                        //                   url: "/event/add",
-                        //                   data: {
-                        //                         title: title,
-                        //                         start_date: start.format("YYYY-MM-DD"),
-                        //                         start_time: start.format("HH:mm:ss"),
-                        //                         end_date: end.format("YYYY-MM-DD"),
-                        //                         end_time: end.format("HH:mm:ss"),
-                        //                         allDay: all_day,
-                        //                         className: 'label-info'
-                        //                   }
-                        //             });
+                        // //set all day checkbox
+                        //  $("#allDayCheckbox").prop('checked', all_day);
 
-                        //       }
+                        // //initialize date picker
+                        // modal.find('.datepicker').datepicker({
+                        //        'showDuration': true,
+                        //        'autoclose': true
                         // });
 
-                        var modal ='\
-                        <div class="modal fade">\
-                        <div class="modal-dialog">\
-                        <div class="modal-content">\
-                        <div class="modal-body">\
-                        <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;"></button>\
-                        <div class="no-margin">\
-                        <div class="row ">  \
-                              <div class="col-md-12"> \
-                                    <form class="form-horizontal"> \
-                                          <div class="form-group"> \
-                                                <label class="col-md-4 control-label" for="title">Title</label> \
-                                                <div class="col-md-4 input-group"> \
-                                                      <input id="title" name="title" type="text" placeholder="Event title" class="form-control"/> \
-                                                </div> \
-                                          </div> \
-                                          <div class="form-group"> \
-                                                <label class="col-md-4 control-label" for="description">Description</label> \
-                                                <div class="col-md-4 input-group"> \
-                                                      <textarea class="form-control" rows="4" cols="20" id="description" placeholder="Event description"/>\
-                                                </div> \
-                                          </div> \
-                                          <div class="form-group"> \
-                                          <div class="col-md-4 col-md-offset-4 input-group"> \
-                                          <input class="" type="checkbox" id="allDayCheckbox" name="allDayCheckbox" value="AllDay">All Day Event<br>\
-                                          </div>\
-                                          </div>\
-                                          <div id="datetime">\
-                                          <div class="form-group"> \
-                                                <label class="col-md-4 control-label" for="start_date">Pick a start date</label>\
-                                                <div class="col-md-4 input-group"> \
-                                                      <input id="start_date" class="form-control datepicker date start" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="' + start.format("YYYY-MM-DD") + '"/>\
-                                                      <label for="start_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>\
-                                                </div>\
-                                          </div>\
-                                          <div class="form-group">\
-                                                <label class="col-md-4 control-label" for="start_time">Pick a start time</label>\
-                                                <div class="col-md-4 input-group"> \
-                                                      <input type="text" id="start_time" class="form-control timepicker time start" name="start_time"  value="' +  start.format("HH:mm") + '">\
-                                                      <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
-                                                 </div>\
-                                          </div>\
-                                          <div class="form-group"> \
-                                                <label class="col-md-4 control-label" for="end_date">Pick a end date</label>\
-                                                <div class="col-md-4 input-group"> \
-                                                      <input id="end_date" class="form-control datepicker date end" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="' + end.format("YYYY-MM-DD") + '"/>\
-                                                      <label for="end_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>\
-                                                </div>\
-                                          </div>\
-                                          <div class="form-group">\
-                                                <label class="col-md-4 control-label" for="end_time">Pick a end time</label>\
-                                                <div class="col-md-4 input-group"> \
-                                                      <input type="text" id="end_time" class="form-control timepicker time end" name="end_time"  value="' +  end.format("HH:mm") + '">\
-                                                      <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
-                                                 </div>\
-                                          </div>\
-                                          </div>\
-                                          <div>\
-                                          \
-                                          </div>\
-                                          <div class="modal-footer">\
-                                           <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
-                                          <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
-                                          </div>\
-                                    </form> \
-                              </div> \
-                        </div>\
-                        </div>\
-                        </div>\
-                        </div>\
-                        </div>\
-                        ';
+                        // modal.find(".datepicker").on("change", function () {
+                        //    //some validation
+                        // });
 
-                         var modal = $(modal).appendTo('body');
-
-                        //set all day checkbox
-                         $("#allDayCheckbox").prop('checked', all_day);
-
-                        modal.find('.datepicker').datepicker({
-                               'showDuration': true,
-                               'autoclose': true
-                        });
-                        // $('.datepicker').datepicker('update');
-                        // $('.datepicker').val('');
-
-                        modal.find(".datepicker").on("change", function () {
-                           //maybe some validation
-                        });
-
-                        //initialize time picker
-                        modal.find('.time').timepicker({
-                          'showDuration': true,
-                          'timeFormat': 'g:i a'
-                        });
+                        // //initialize time picker
+                        // modal.find('.time').timepicker({
+                        //   'showDuration': true,
+                        //   'timeFormat': 'g:i a'
+                        // });
 
 
+                        // // initialize datepair
+                        // var basicExampleEl = document.getElementById('datetime');
+                        // var datepair = new Datepair(basicExampleEl);
 
-                        // initialize datepair
-                        var basicExampleEl = document.getElementById('datetime');
-                        var datepair = new Datepair(basicExampleEl);
+                        // //focus title field when dialog opens
+                        // modal.on('shown.bs.modal' , function(){$('#title').focus()});
 
-                        modal.on('shown.bs.modal' , function(){$('#title').focus()});
+                        // //on submit
+                        // modal.find('form').on('submit', function(ev){
+                        //       ev.preventDefault();
+                        //       updateEvent(event);
+                        //       //hide the dialog
+                        //       modal.remove();
+                        // });
 
-                        modal.find('form').on('submit', function(ev){
-                              ev.preventDefault();
-                              createNewEvent(event);
-                              //hide the dialog
-                              modal.remove();
-                        });
+                        // //on close
+                        // modal.modal('show').on('hidden', function(){
+                        //       modal.remove();
+                        // });
 
-                        //on close
-                        modal.modal('show').on('hidden', function(){
-                              modal.remove();
-                        });
-
-                        modal.on('hide.bs.modal', function(e){
-                               if (e.target === this){
-                                    modal.remove();
-                               }
-                        });
-
-
-
+                        // //if hidden - remove
+                        // modal.on('hide.bs.modal', function(e){
+                        //        if (e.target === this){
+                        //             modal.remove();
+                        //        }
+                        // });
 
                         calendar.fullCalendar('unselect');
 
@@ -269,108 +166,96 @@
                   //edits an existing event
                   eventClick: function(calEvent, jsEvent, view) {
 
+                        //append close button
                         $('#closeButton').show();
 
-                         $.get("/event/edit/" + calEvent.id, function( data ) {
+                        //get html for details
+                        //TODO: move the code here, bo need for ajax
+                        $.get("/event/edit/" + calEvent.id, function( data ) {
                                     //$( "body" ).html( data );
                                     $(data).insertBefore( "#closeButton" );
                               }
                         );
 
-                        //console.log(page['responseText']);
 
+                        //hide the calendar
                         calendar.hide();
-                        //$(page).appendTo('body');
 
 
-                        //display a modal dialog
-                        var modal =
-                        '<div class="modal fade">\
-                        <div class="modal-dialog">\
-                        <div class="modal-content">\
-                        <div class="modal-body">\
-                        <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;"></button>\
-                        <form class="no-margin">\
-                        <label>Change event name </label>\
-                        <input id="title" class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
-                        <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
-                        </form>\
-                        </div>\
-                        <div class="modal-footer">\
-                        <button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
-                        <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
-                        </div>\
-                        </div>\
-                        </div>\
-                        </div>';
+                        initModal(calEvent, true);
+
+                        // //display a modal dialog
+                        // var modalString = getModal (calEvent, true);
+                        // var modal = $(modalString).appendTo('body');
+
+                        // $('#title').focus();
+
+                        //  //set all day checkbox
+                        //  $("#allDayCheckbox").prop('checked', calEvent.allDay);
+
+                        // //on save
+                        // modal.find('form').on('submit', function(ev){
+                        //       ev.preventDefault();
+                        //       switchToCalendarView();
+
+                        //       updateEvent(calEvent);
+                        //       // //update event parameters
+                        //       // calEvent.title = $(this).find("input[type=text]").val();
+                        //       // calendar.fullCalendar('updateEvent', calEvent);
 
 
-                        var modal = $(modal).appendTo('body');
+                        //       // //post event (saves to the database)
+                        //       // $.ajax({
+                        //       //       type: "POST",
+                        //       //       url: "/event/edit/" + calEvent.id,
+                        //       //       data: {
+                        //       //             title: calEvent.title,
+                        //       //             start_date: calEvent.start.format("YYYY-MM-DD"),
+                        //       //             start_time: calEvent.start.format("HH:mm:ss"),
+                        //       //             end_date: !calEvent.end ? '' : calEvent.end.format("YYYY-MM-DD"),
+                        //       //             end_time: !calEvent.end ? '' :  calEvent.end.format("HH:mm:ss"),
+                        //       //             allDay: calEvent.allDay,
+                        //       //             className: calEvent.className.toString()
+                        //       //       }
+                        //       // });
 
-                        $('#title').focus();
-
-                        //on save
-                        modal.find('form').on('submit', function(ev){
-                              ev.preventDefault();
-                              switchToCalendarView();
-
-                              //update event parameters
-                              calEvent.title = $(this).find("input[type=text]").val();
-                              calendar.fullCalendar('updateEvent', calEvent);
-
-
-                              //post event (saves to the database)
-                              $.ajax({
-                                    type: "POST",
-                                    url: "/event/edit/" + calEvent.id,
-                                    data: {
-                                          title: calEvent.title,
-                                          start_date: calEvent.start.format("YYYY-MM-DD"),
-                                          start_time: calEvent.start.format("HH:mm:ss"),
-                                          end_date: !calEvent.end ? '' : calEvent.end.format("YYYY-MM-DD"),
-                                          end_time: !calEvent.end ? '' :  calEvent.end.format("HH:mm:ss"),
-                                          allDay: calEvent.allDay,
-                                          className: calEvent.className.toString()
-                                    }
-                              });
-
-                              //remove the dialog
-                              modal.remove();
+                        //       //remove the dialog
+                        //       modal.remove();
 
 
-                        });
+                        // });
 
-                        //on delete
-                        modal.find('button[data-action=delete]').on('click', function() {
+                        // //on delete
+                        // modal.find('button[data-action=delete]').on('click', function() {
 
-                              switchToCalendarView();
+                        //       switchToCalendarView();
 
-                              //delete from the database
-                               $.ajax({
-                                    type: "POST",
-                                    url: "/event/delete/" + calEvent.id,
-                              });
+                        //       //delete from the database
+                        //        $.ajax({
+                        //             type: "POST",
+                        //             url: "/event/delete/" + calEvent.id,
+                        //       });
 
-                              //remove the event from the calendar
-                              calendar.fullCalendar('removeEvents' , function(ev){
-                                    return (ev._id == calEvent._id);
-                              })
+                        //       //remove the event from the calendar
+                        //       calendar.fullCalendar('removeEvents' , function(ev){
+                        //             return (ev._id == calEvent._id);
+                        //       })
 
-                              //remove the dialog
-                              modal.remove();
+                        //       //remove the dialog
+                        //       modal.remove();
 
-                        });
+                        // });
 
-                        //get focus on title input
-                        modal.on('shown.bs.modal' , function(){$('#title').focus()});
+                        // //get focus on title input
+                        // modal.on('shown.bs.modal' , function(){$('#title').focus()});
 
-                        //on close remove modal
-                        modal.modal('show').on('hidden', function(){
-                              modal.remove();
-                        });
-                        modal.on('hide.bs.modal', function(){
-                              modal.remove();
-                        });
+                        // //on close remove modal
+                        // modal.modal('show').on('hidden', function(){
+                        //       modal.remove();
+                        // });
+                        // modal.on('hide.bs.modal', function(){
+                        //       modal.remove();
+                        // });
 
                         //close button leads back to calendar view
                         $('#closeButton').on('click', function (ev){
@@ -395,29 +280,65 @@
                   $('#closeButton').hide();
             }
 
-            function createNewEvent(event){
+            function updateEvent(event){
+                  //title - required
                   var title = $('#title').val();
+
+                  //description - optional
                   var description =  $('textarea#description').val();
-                  var start_date = moment($('#start_date').val(), "YYYY-MM-DD");
-                  var start_time = moment($('#start_time').val(), "h:mm a");
-                  var end_date = moment($('#end_date').val(), "YYYY-MM-DD");
-                  var end_time = moment($('#end_time').val(), "h:mm a");
+
+                  //set start day - required
+                  var raw_start_date = $('#start_date').val();
+
+                  //if start time is empty, set to 0:00 am
+                  var raw_start_time = $('#start_time').val();
+                  if (!raw_start_time){
+                      raw_start_time = '0:00 am';
+                  }
+                  var start_time = moment(raw_start_time, "h:mm a");
+
+                  //if end day is empty, set it to start day
+                  var raw_end_date = $('#end_date').val()
+                  if (!raw_end_date){
+                        raw_end_date = raw_start_date;
+                  }
+                  var end_date = moment(raw_end_date, "YYYY-MM-DD");
+
+                  //if end time is empty, set to 11:59 pm
+                  var raw_end_time =$('#end_time').val();
+                  if (!raw_end_time){
+                       raw_end_time = '11:59 pm'
+                  }
+                  var end_time = moment(raw_end_time, "h:mm a");
+
+                  //set all day
                   var allDay = $('#allDayCheckbox').is(':checked');
 
-                  if (title !== '') {
+                  // console.log(end_date);
+
+                  if (title !== '' && !!raw_start_date) {
+
                         event.title = title;
                         event.description = description;
-                        event.start_date = start_date;
+                        event.start_date = moment(raw_start_date, "YYYY-MM-DD");;
                         event.start_time = start_time;
                         event.end_time = end_time;
                         event.end_date = end_date;
                         event.allDay = allDay;
 
+                        var url;
+
+                        if (!!event.id){
+                              url = "/event/edit/" + event.id;
+                        }
+                        else{
+                             url = "/event/add";
+                        }
 
                         //post event
                         var response = $.ajax({
                               type: "POST",
-                              url: "/event/add",
+                              url: url,
                               data: {
                                     title:  event.title,
                                     start_date:  event.start_date.format("YYYY-MM-DD"),
@@ -425,7 +346,7 @@
                                     end_date:  event.end_date.format("YYYY-MM-DD"),
                                     end_time:  event.end_time.format("HH:mm:ss"),
                                     allDay:  event.allDay,
-                                    className:  event.className,
+                                    className:  event.className.toString(),
                                     description: event.description
                               },
                               success: function(){
@@ -441,6 +362,206 @@
 
 
                   }
+
+            }
+
+            //generates a modal window code
+            function getModal (event, needDeleteButton){
+                  var modal ='\
+                        <div class="modal fade">\
+                        <div class="modal-dialog">\
+                        <div class="modal-content">\
+                        <div class="modal-body">\
+                        <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;"></button>\
+                        <div class="no-margin">\
+                        <div class="row ">  \
+                              <div class="col-md-12"> \
+                                    <form class="form-horizontal"> \
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="title">Title</label> \
+                                                <div class="col-md-4 input-group"> \
+                                                      <input id="title" name="title" type="text" placeholder="Event title" class="form-control" value="';
+                  if (!!event.title){
+                        modal += event.title;
+                  }
+
+                  modal += '"/> \
+                                                </div> \
+                                          </div> \
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="description">Description</label> \
+                                                <div class="col-md-4 input-group"> \
+                                                      <textarea class="form-control" rows="4" cols="20" id="description" placeholder="Event description">';
+                  if (!!event.description){
+                        modal += event.description;
+                  }
+
+                  modal += '</textarea>\
+                                                </div> \
+                                          </div> \
+                                          <div class="form-group"> \
+                                          <div class="col-md-4 col-md-offset-4 input-group"> \
+                                          <input class="" type="checkbox" id="allDayCheckbox" name="allDayCheckbox" value="AllDay">All Day Event<br>\
+                                          </div>\
+                                          </div>\
+                                          <div id="datetime">\
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="start_date">Pick a start date</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input id="start_date" class="form-control datepicker date start" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="';
+                  if (!!event.start){
+                        modal += event.start.format("YYYY-MM-DD");
+                  }
+
+                  modal +='"/>\
+                                                      <label for="start_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>\
+                                                </div>\
+                                          </div>\
+                                          <div class="form-group">\
+                                                <label class="col-md-4 control-label" for="start_time">Pick a start time</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input type="text" id="start_time" class="form-control timepicker time start" name="start_time"  value="';
+                  if (!!event.start){
+                        modal += event.start.format("HH:mm");
+                  }
+
+                  modal += '">\
+                                                      <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
+                                                 </div>\
+                                          </div>\
+                                          <div class="form-group"> \
+                                                <label class="col-md-4 control-label" for="end_date">Pick a end date</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input id="end_date" class="form-control datepicker date end" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="';
+                  if (!!event.end){
+                        modal += event.end.format("YYYY-MM-DD");
+                  }
+
+                  modal += '"/>\
+                                                      <label for="end_date" class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></label>\
+                                                </div>\
+                                          </div>\
+                                          <div class="form-group">\
+                                                <label class="col-md-4 control-label" for="end_time">Pick a end time</label>\
+                                                <div class="col-md-4 input-group"> \
+                                                      <input type="text" id="end_time" class="form-control timepicker time end" name="end_time"  value="';
+                  if (!!event.end){
+                        modal +=  event.end.format("HH:mm");
+                  }
+
+                  modal += '">\
+                                                      <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
+                                                 </div>\
+                                          </div>\
+                                          </div>\
+                                          <div>\
+                                          \
+                                          </div>\
+                                          <div class="modal-footer">\
+                                           <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>';
+
+                  if (needDeleteButton){
+                        modal += '<button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>';
+                  }
+
+                                          modal += '<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+                                          </div>\
+                                    </form> \
+                              </div> \
+                        </div>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        ';
+                  return modal;
+            };
+
+            function initModal(event, needDeleteButton){
+
+                  var modalString = getModal(event, needDeleteButton);
+
+                  modal = $(modalString).appendTo('body');
+
+                  //set all day checkbox
+                   $("#allDayCheckbox").prop('checked', event.allDay);
+
+                  //initialize date picker
+                  modal.find('.datepicker').datepicker({
+                         'showDuration': true,
+                         'autoclose': true
+                  });
+
+                  modal.find(".datepicker").on("change", function () {
+                     //some validation
+                  });
+
+                  //initialize time picker
+                  modal.find('.time').timepicker({
+                    'showDuration': true,
+                    'timeFormat': 'g:i a'
+                  });
+
+
+                  // initialize datepair
+                  var basicExampleEl = document.getElementById('datetime');
+                  var datepair = new Datepair(basicExampleEl);
+
+                  //focus title field when dialog opens
+                  modal.on('shown.bs.modal' , function(){$('#title').focus()});
+
+                  //on submit
+                  modal.find('form').on('submit', function(ev){
+                        ev.preventDefault();
+
+                        updateEvent(event);
+
+                        if (needDeleteButton){
+                              switchToCalendarView();
+                              calendar.fullCalendar('updateEvent', event);
+                        }
+
+                        //hide the dialog
+                        modal.remove();
+                  });
+
+                  //on close
+                  modal.modal('show').on('hidden', function(){
+                        modal.remove();
+                  });
+
+                  //if hidden - remove
+                  modal.on('hide.bs.modal', function(e){
+                         if (e.target === this){
+                              modal.remove();
+                         }
+                  });
+
+                  if (needDeleteButton){
+                         //on delete
+                        modal.find('button[data-action=delete]').on('click', function() {
+
+                              switchToCalendarView();
+
+                              //delete from the database
+                               $.ajax({
+                                    type: "POST",
+                                    url: "/event/delete/" + event.id,
+                              });
+
+                              //remove the event from the calendar
+                              calendar.fullCalendar('removeEvents' , function(ev){
+                                    return (ev._id == event._id);
+                              })
+
+                              //remove the dialog
+                              modal.remove();
+
+                        });
+
+                  }
+
+
 
             }
 
