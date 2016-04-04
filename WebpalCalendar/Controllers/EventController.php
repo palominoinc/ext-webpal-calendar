@@ -161,6 +161,7 @@ class EventController extends BaseController
                     'end_time'=> $this->parseFormatDate(Input::get('end_time'), 'H:i:s'),
                     'allDay'=> Input::get('allDay') === 'true',
                     'className'=> $this->validateClass(Input::get('className')),
+                    'level' => intVal(Input::get('level'))
                     ]);
 
     return Response::json([ 'status' => 'ok', 'event' => $event->toArray(), ]);

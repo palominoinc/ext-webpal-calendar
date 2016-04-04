@@ -107,7 +107,9 @@ class Event extends Eloquent
   	$this->end_time = $data['end_time'];
   	$this->end_date = $data['end_date'];
   	$this->allDay = $data['allDay'];
-  	$this->className = $data['className'];
+    $this->className = $data['className'];
+  	$this->level = $data['level'];
+
 
 
     $this->save();

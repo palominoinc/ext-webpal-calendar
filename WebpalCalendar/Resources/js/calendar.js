@@ -177,7 +177,8 @@
                               end_time:  event.end_time.format("HH:mm:ss"),
                               allDay:  event.allDay,
                               className:  event.className.toString(),
-                              description: event.description
+                              description: event.description,
+                              level: event.level
                         },
                         success: function(){
                               //update the calendar (needed to get an event id from the database)
@@ -188,14 +189,20 @@
             };
 
             function gatherEventDetails(event){
-                   //title - required
+                   //title - defaults to 'New Event'
                   var title = $('#title').val();
+                  if (!title){
+                        title = 'New Event';
+                  }
 
                   //description - optional
                   var description =  $('textarea#description').val();
 
-                  //set start day - required
+                  //set start day - defaults to today
                   var raw_start_date = $('#start_date').val();
+                  if (!raw_start_date){
+                        raw_start_date = date.format('YYYY-MM-DD');
+                  }
 
                   //if start time is empty, set to 0:00 am
                   var raw_start_time = $('#start_time').val();
@@ -221,20 +228,20 @@
                   //set all day
                   var allDay = $('#allDayCheckbox').is(':checked');
 
-                  // console.log(end_date);
+                  //set level
+                  var level = $('#level').val();
 
-                  if (title !== '' && !!raw_start_date) {
+                  event.title = title;
+                  event.description = description;
+                  event.start_date = moment(raw_start_date, "YYYY-MM-DD");
+                  event.start_time = start_time;
+                  event.end_time = end_time;
+                  event.end_date = end_date;
+                  event.allDay = allDay;
+                  event.level = level;
 
-                        event.title = title;
-                        event.description = description;
-                        event.start_date = moment(raw_start_date, "YYYY-MM-DD");
-                        event.start_time = start_time;
-                        event.end_time = end_time;
-                        event.end_date = end_date;
-                        event.allDay = allDay;
+                  return event;
 
-                        return event;
-                  }
 
 
             }
@@ -393,7 +400,6 @@
                   var userLevel;
                   $.get('/userlevel', function(data){
                         userLevel = data.userLevel;
-                        console.log(data);
 
                         //init select level options
                         for (i = 1; i <= userLevel; i++){
