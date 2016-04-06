@@ -56,10 +56,12 @@ class EventController extends BaseController
 
   /**
    * deletes an event record with given id from the database
+   * @return  Response JSON with status and id of deleted record (using soft delete)
    */
   public function deleteRecord($id)
   {
       Event::destroy($id);
+      return Response::json([ 'status' => 'ok', 'id' => $id ]);
   }
 
   /**gets all events from the database
@@ -76,19 +78,19 @@ class EventController extends BaseController
      $events = Event::where('level', '<=', $level)->get();
 
      //transform start and end date and time to fullCalendar's format
-     foreach ($events as $event){
+     foreach ($events as $event) {
 
       //set start date and time
       $start = $event->start_date;
-      if ($event->start_time){
-        $start = $start.'T'.$event->start_time;
+      if ($event->start_time) {
+        $start = $start . 'T' . $event->start_time;
       }
       $event->start =  $start;
 
       //set end date and time
       $end =  $event->end_date;
-      if ($event->end_time){
-        $end = $end.'T'.$event->end_time;
+      if ($event->end_time) {
+        $end = $end . 'T' . $event->end_time;
       }
       $event->end = $end;
      }
@@ -100,7 +102,7 @@ class EventController extends BaseController
    * returns the highest level assigned to the user
    * @return int highest user level
    */
-  public function getUserLevel(){
+  public function getUserLevel() {
      return  Response::json([ 'status' => 'ok', 'userLevel' => $this->getLevel() ]);
   }
 
@@ -109,7 +111,8 @@ class EventController extends BaseController
 // --------------------------------------------------
 
 
- /** updates event in the database using input params
+ /**
+  * updates event in the database using input params
  *	@return Response (json with status and new event)
  */
   private function updateEvent(Event $event){
@@ -126,7 +129,7 @@ class EventController extends BaseController
                     'color' => $this->validateColor(Input::get('color'))
                     ]);
 
-    return Response::json([ 'status' => 'ok', 'event' => $event->toArray(), ]);
+    return Response::json([ 'status' => 'ok', 'event' => $event->toArray() ]);
 
   }
 
@@ -136,7 +139,7 @@ class EventController extends BaseController
    * @param  string $format a format to use
    * @return  string (formatted)
    */
-  private function parseFormatDate($date, $format){
+  private function parseFormatDate($date, $format) {
   	return DateTime::createFromFormat($format, $date)->format($format);
   }
 
@@ -145,20 +148,18 @@ class EventController extends BaseController
  * @param  string $className a class to check
  * @return string            a valid class or an empty string
  */
-  private function validateClass($className){
-  	if (in_array($className, ['label-info'])){
+  private function validateClass($className) {
+  	if (in_array($className, ['label-info'])) {
   		return $className;
-  	}
-  	else{
+  	} else {
   		return '';
   	}
   }
 
-  private function validateColor ($color){
-    if (in_array($color, ['red', 'green', 'blue', 'black', 'yellow', 'grey'])){
+  private function validateColor ($color) {
+    if (in_array($color, [ 'red', 'green', 'blue', 'black', 'yellow', 'grey' ])) {
       return $color;
-    }
-    else{
+    } else {
       return '';
     }
   }
@@ -166,15 +167,15 @@ class EventController extends BaseController
   private function getLevel(){
     $user = Connection::userInfo();
 
-    if (strpos( $user['groups'], 'Level 4') !== false){
+    if (mb_strpos( $user['groups'], 'Level 4') !== false) {
       return 4;
     };
 
-    if (strpos( $user['groups'], 'Level 3') !== false){
+    if (mb_strpos( $user['groups'], 'Level 3') !== false) {
       return 3;
     };
 
-    if (strpos( $user['groups'], 'Level 2') !== false){
+    if (mb_strpos( $user['groups'], 'Level 2') !== false) {
       return 2;
     };
 

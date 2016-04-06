@@ -56,21 +56,21 @@ class Event extends Eloquent
   }
 
   /**
-   *
+   * updates event in the database
    */
   public function update(array $data)
   {
 
-  	$this->title = $data['title'];
-  	$this->description = $data['description'];
-  	$this->start_time = $data['start_time'];
-  	$this->start_date = $data['start_date'];
-  	$this->end_time = $data['end_time'];
-  	$this->end_date = $data['end_date'];
-  	$this->allDay = $data['allDay'];
-    $this->className = $data['className'];
-    $this->level = $data['level'];
-  	$this->color = $data['color'];
+  	$this->title = $data[ 'title' ];
+  	$this->description = $data[ 'description' ];
+  	$this->start_time = $data[ 'start_time' ];
+  	$this->start_date = $data[ 'start_date' ];
+  	$this->end_time = $data[ 'end_time' ];
+  	$this->end_date = $data[ 'end_date' ];
+  	$this->allDay = $data[ 'allDay' ];
+    $this->className = $data[ 'className' ];
+    $this->level = $data[ 'level' ];
+  	$this->color = $data[ 'color' ];
 
     $this->save();
 
