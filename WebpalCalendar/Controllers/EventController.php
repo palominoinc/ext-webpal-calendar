@@ -75,7 +75,7 @@ class EventController extends BaseController
      Log::info('level', $level);
 
      //get all the events with the level below user's level
-     $events = Event::where('level', '<=', $level)->get();
+     $events = Event::where('start_date', '>=', Input::get('start'))->where('end_date', '<=', Input::get('end'))->where('level', '<=', $level)->get();
 
      //transform start and end date and time to fullCalendar's format
      foreach ($events as $event) {
