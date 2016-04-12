@@ -1,2 +1,4 @@
 <?xml version="1.0"?>
-<object id="objeG8UURH9_04_X" name="webpal_calendar_events" webpalschematype="wpAppSchemaObject"><fields id="fielmvzNSGV6tAPR" __stub="yes"/></object>
+<object id="objeG8UURH9_04_X" name="webpal_calendar_events" webpalschematype="wpAppSchemaObject">
+      <fields id="fielmvzNSGV6tAPR" __stub="yes"/>
+    </object>

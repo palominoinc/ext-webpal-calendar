@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
-<extension id="extea4UsUAUQDRdV" name="webpal-calendar" webpalschematype="wpExtension"><resources id="reso4v8863pp7Dad" __stub="yes"/><controllers id="contT69f9GhHxdG_" __stub="yes"/><routes id="routASQHPMsjjsMS" __stub="yes"/><models id="modelJP3rcwFKvR9" __stub="yes"/><db-schema id="db-sG6mfWTnDAQ4O" __stub="yes"/>
+<extension id="extea4UsUAUQDRdV" name="webpal-calendar" webpalschematype="wpExtension">
+  <resources id="reso4v8863pp7Dad" __stub="yes"/>
+  <controllers id="contT69f9GhHxdG_" __stub="yes"/>
+  <routes id="routASQHPMsjjsMS" __stub="yes"/>
+  <models id="modelJP3rcwFKvR9" __stub="yes"/>
+  <db-schema id="db-sG6mfWTnDAQ4O" __stub="yes"/>
   <README id="READ996hg2_ATaAJ" __stub="yes"/>
   <node-schema id="nodeW6VAu78xHQl6" __stub="yes"/>
   <stylesheet id="stylYG3GMcoG_KtM" __stub="yes"/>
