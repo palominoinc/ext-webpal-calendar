@@ -12,15 +12,19 @@ Usage
 
 1. After importing the extension, reload the WebPal UI.
 2. Make sure to include dtaepicker, timepicker and datepair in the template of your site. Use this code:
-3. <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" type="text/css"/>  
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" type="text/css"/>  
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.css" type="text/css"/>
 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.js"></script>  
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.js"></script>  
  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepair.js/0.4.14/datepair.min.js"></script>
-4. Insert an **events** node into any page.
-5. To render the calendar, apply templates for the events node, using mode **as-calendar**:![](__resources/imgVJikWIfNcsRn.png)
-6. The calendar widget will show up as such:
+
+![data?command=webpalimage.download&web_na](__resources/pastiotr0UWRe_88.png)
+
+1. Insert an **events** node into any page.
+2. To render the calendar, apply templates for the events node, using mode **as-calendar**:![](__resources/imgVJikWIfNcsRn.png)
+3. The calendar widget will show up as such:
 
 â&#128;&#139;![data?command=webpalimage.download&web_na](__resources/pastyFGOg0cOlj1g.png)
 
