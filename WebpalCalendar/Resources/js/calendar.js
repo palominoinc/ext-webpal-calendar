@@ -200,20 +200,21 @@ jQuery(function($) {
     var level = $('#level').val();
 
     //set color based on level
-    var color;
-    switch (level) {
-      case '2':
-      color = 'green';
-      break;
-      case '3':
-      color = 'red';
-      break;
-      case '4':
-      color = 'black';
-      break;
-      default:
-      color ='';
-    }
+    // var color;
+    // switch (level) {
+    //   case '2':
+    //   color = 'green';
+    //   break;
+    //   case '3':
+    //   color = 'red';
+    //   break;
+    //   case '4':
+    //   color = 'black';
+    //   break;
+    //   default:
+    //   color ='';
+    // }
+    var color = $('#color').val();
 
     event.title = title;
     event.description = description;
@@ -346,8 +347,12 @@ jQuery(function($) {
     </select>\
     </div>\
     </div>\
-    <div>\
-    \
+    <div class="form-group">\
+    <label class="col-md-4 control-label" for="color">Color</label>\
+    <div class="col-md-4 input-group"> \
+    <select id="color" class="form-control" name="color">\
+    </select>\
+    </div>\
     </div>\
     <div class="modal-footer">\
     <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>';
@@ -431,9 +436,20 @@ jQuery(function($) {
 
       //select calendar level
       $('select option[ value=' + event.level + ' ]').attr("selected",true);
+
     });
 
+    //set a color selector
+    var colors =['red', 'purple', 'black', 'darkblue'];
 
+    for (i = 0; i < colors.length; i++) {
+        $('#color')
+          .append($('<option>', {value : colors[i]} )
+          .text(colors[i]));
+    };
+
+    //select event color
+    $('select option[ value=' + event.color + ' ]').attr("selected",true);
 
     //focus title field when dialog opens
     modal.on('shown.bs.modal' , function() { $('#title').focus() } );

@@ -157,7 +157,7 @@ class EventController extends BaseController
   }
 
   private function validateColor ($color) {
-    if (in_array($color, [ 'red', 'green', 'blue', 'black', 'yellow', 'grey' ])) {
+    if (in_array($color, [ 'red', 'green', 'darkblue', 'black', 'yellow', 'grey', 'purple' ])) {
       return $color;
     } else {
       return '';
