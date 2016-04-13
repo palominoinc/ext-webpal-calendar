@@ -268,7 +268,7 @@ jQuery(function($) {
     </div> \
     <div class="form-group"> \
     <div class="col-md-4 col-md-offset-4 input-group"> \
-    <input class="" type="checkbox" id="allDayCheckbox" name="allDayCheckbox" value="AllDay">All Day Event<br>\
+    <input class="" type="checkbox" id="allDayCheckbox" name="allDayCheckbox" value="AllDay"><label for="allDayCheckbox">All Day Event</label><br>\
     </div>\
     </div>\
     <div id="datetime">\
