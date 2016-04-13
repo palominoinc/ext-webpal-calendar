@@ -2,6 +2,14 @@
 *      more info at: http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/
 */
 jQuery(function($) {
+
+  const colorLabelTable = {
+    red: 'Red',
+    darkblue: 'Dark Blue',
+    black: 'Black',
+    purple: 'Purple'
+  }
+
   $('#external-events div.external-event').each(function() {
     // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
     // it doesn't need to have a start or end
@@ -442,10 +450,11 @@ jQuery(function($) {
     //set a color selector
     var colors =['red', 'purple', 'black', 'darkblue'];
 
-    for (i = 0; i < colors.length; i++) {
+
+    for (var key in colorLabelTable) {
         $('#color')
-          .append($('<option>', {value : colors[i]} )
-          .text(colors[i]));
+          .append($('<option>', {value : key} )
+          .text(colorLabelTable[key]));
     };
 
     //select event color
