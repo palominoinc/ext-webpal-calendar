@@ -234,10 +234,28 @@ jQuery(function($) {
 
   //generates a modal window code
   function getModal (event, needDeleteButton) {
+    var title;
+
+    if (needDeleteButton){
+      title = 'Edit Event';
+    }
+    else {
+      title = 'Create New Event';
+    }
+
     var modal ='\
     <div class="modal fade">\
     <div class="modal-dialog">\
     <div class="modal-content">\
+    <div class="modal-header">\
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
+        <h4 class="modal-title">'
+
+    modal += title;
+
+    modal +=
+    '</h4>\
+    </div>\
     <div class="modal-body">\
     <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;"></button>\
     <div class="no-margin">\
