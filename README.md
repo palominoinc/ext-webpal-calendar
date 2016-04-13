@@ -26,10 +26,10 @@ Usage
 2. To render the calendar, apply templates for the events node, using mode **as-calendar**:![](__resources/imgVJikWIfNcsRn.png)
 3. The calendar widget will show up as such:
 
-â&#128;&#139;![data?command=webpalimage.download&web_na](__resources/pastyFGOg0cOlj1g.png)
+![data?command=webpalimage.download&web_na](__resources/pastyFGOg0cOlj1g.png)
 
-1. Click on any date to add an event
-2. Enter information in the dialog box and click save
-3. To edit and event just click on it
-4. In the week view you can drag and release to specify the start and end time of the new event, but they can be changed in the dialog box that will show up after releasing the mouse button.
+4. Click on any date to add an event
+5. Enter information in the dialog box and click save
+6. To edit and event just click on it
+7. In the week view you can drag and release to specify the start and end time of the new event, but they can be changed in the dialog box that will show up after releasing the mouse button.
 
