@@ -97,6 +97,8 @@ jQuery(function($) {
       //generate modal dialog without delete button
       initModal(event, false);
 
+
+
     }
     ,
 
@@ -126,6 +128,8 @@ jQuery(function($) {
      url = "/event/add";
     }
 
+
+
     //post event
     var response = $.ajax({
       type: "POST",
@@ -143,8 +147,10 @@ jQuery(function($) {
         color: event.color
       },
       success: function() {
+
                 //update the calendar (needed to get an event id from the database)
                 calendar.fullCalendar( 'refetchEvents' );
+
       }
     });
 
@@ -218,6 +224,8 @@ jQuery(function($) {
     event.allDay = allDay;
     event.level = level;
     event.color = color;
+    event.start = raw_start_date + 'T' + event.start_time.format("HH:mm:ss");
+    event.end = raw_end_date + 'T' + event.end_time.format("HH:mm:ss");
 
     return event;
 
@@ -404,8 +412,11 @@ jQuery(function($) {
         // switchToCalendarView();
         calendar.fullCalendar('updateEvent', event);
       }
+      else {
+         calendar.fullCalendar('renderEvent', event);
+      }
 
-      calendar.fullCalendar('updateEvent', event);
+      // calendar.fullCalendar('updateEvent', event);
 
       //hide the dialog
       modal.remove();
