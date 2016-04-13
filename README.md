@@ -20,9 +20,12 @@ Installing
  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepair.js/0.4.14/datepair.min.js"></script>
 
 ![data?command=webpalimage.download&web_na](__resources/pastiotr0UWRe_88.png)
-3. Insert an **events** node into any page.
-4. To render the calendar, apply templates for the events node, using mode **as-calendar**:![](__resources/imgVJikWIfNcsRn.png)
-5. The calendar widget will show up as such: ![data?command=webpalimage.download&web_na](__resources/pastyFGOg0cOlj1g.png)
+3. Insert an **events** node into any page. <br/>
+4. To render the calendar, apply templates for the events node, using mode **as-calendar**:
+
+![](__resources/imgVJikWIfNcsRn.png)
+5. The calendar widget will show up as such: 
+![data?command=webpalimage.download&web_na](__resources/pastyFGOg0cOlj1g.png)
 
 Usage
 -----
