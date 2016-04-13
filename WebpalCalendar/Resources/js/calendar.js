@@ -408,15 +408,9 @@ jQuery(function($) {
 
       updateEvent(event);
 
-      if (needDeleteButton) {
-        // switchToCalendarView();
-        calendar.fullCalendar('updateEvent', event);
-      }
-      else {
+      if (!needDeleteButton) {
          calendar.fullCalendar('renderEvent', event);
       }
-
-      // calendar.fullCalendar('updateEvent', event);
 
       //hide the dialog
       modal.remove();
