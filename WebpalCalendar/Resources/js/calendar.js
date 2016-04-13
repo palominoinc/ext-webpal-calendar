@@ -448,14 +448,15 @@ jQuery(function($) {
     });
 
     //set a color selector
-    var colors =['red', 'purple', 'black', 'darkblue'];
-
-
     for (var key in colorLabelTable) {
         $('#color')
           .append($('<option>', {value : key} )
           .text(colorLabelTable[key]));
     };
+
+    if (!event.color){
+      event.color = 'red';
+    }
 
     //select event color
     $('select option[ value=' + event.color + ' ]').attr("selected",true);
