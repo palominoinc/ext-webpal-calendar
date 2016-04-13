@@ -309,7 +309,7 @@ jQuery(function($) {
     }
 
     modal += '">\
-    <label for="start_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
+    <label for="end_time" class="input-group-addon"><span class="glyphicon glyphicon-time"></span></label>\
     </div>\
     </div>\
     </div>\
@@ -405,8 +405,11 @@ jQuery(function($) {
         calendar.fullCalendar('updateEvent', event);
       }
 
+      calendar.fullCalendar('updateEvent', event);
+
       //hide the dialog
       modal.remove();
+      $('body').removeClass('modal-open');
     });
 
     //on close
@@ -417,6 +420,7 @@ jQuery(function($) {
     //if hidden - remove
     modal.on('hide.bs.modal', function(e) {
       if (e.target === this) {
+        $('body').removeClass('modal-open');
         modal.remove();
       }
     });
