@@ -25,6 +25,7 @@ Installing
 
 ![](__resources/imgVJikWIfNcsRn.png)
 5. The calendar widget will show up as such: 
+
 ![data?command=webpalimage.download&web_na](__resources/pastyFGOg0cOlj1g.png)
 
 Usage
