@@ -351,14 +351,23 @@ jQuery(function($) {
     return modal;
   }
 
+  function setDisabledPropForTimeInputs (modal){
+    if ( $("#allDayCheckbox").is(':checked')) {
+        //disable time inputs
+         modal.find('.time').prop('disabled', true);
+      }
+      else {
+        //enable time inputs
+         modal.find('.time').prop('disabled', false);
+
+      }
+  }
+
   function initModal(event, needDeleteButton) {
 
     var modalString = getModal(event, needDeleteButton);
 
     modal = $(modalString).appendTo('body');
-
-    //set all day checkbox
-    $("#allDayCheckbox").prop('checked', event.allDay);
 
     //initialize date picker
     modal.find('.datepicker').datepicker({
@@ -380,6 +389,15 @@ jQuery(function($) {
     // initialize datepair
     var basicExampleEl = document.getElementById('datetime');
     var datepair = new Datepair(basicExampleEl);
+
+    //set all day checkbox
+    $("#allDayCheckbox").prop('checked', event.allDay);
+
+    setDisabledPropForTimeInputs (modal);
+
+    $("#allDayCheckbox").change(function () {
+      setDisabledPropForTimeInputs (modal);
+    })
 
     //setup calendar level select
     var userLevel;
