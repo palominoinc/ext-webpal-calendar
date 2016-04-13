@@ -8,7 +8,9 @@ jQuery(function($) {
     darkblue: 'Dark Blue',
     black: 'Black',
     purple: 'Purple'
-  }
+  };
+
+  const ColorInputLabel = 'Color';
 
   $('#external-events div.external-event').each(function() {
     // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
@@ -356,7 +358,7 @@ jQuery(function($) {
     </div>\
     </div>\
     <div class="form-group">\
-    <label class="col-md-4 control-label" for="color">Color</label>\
+    <label class="col-md-4 control-label" for="color">' + ColorInputLabel + '</label>\
     <div class="col-md-4 input-group"> \
     <select id="color" class="form-control" name="color">\
     </select>\
