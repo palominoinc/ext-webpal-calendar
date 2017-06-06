@@ -11,14 +11,15 @@ Installing
 -----
 
 1. After importing the extension, reload the WebPal UI.
-2. Make sure to include dtaepicker, timepicker and datepair in the template of your site. Use this code:
+2. Make sure to include datepicker, timepicker and datepair in the template of your site. Use this code:
+```
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" type="text/css"/>  
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.css" type="text/css"/>
 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.js"></script>  
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.js"></script>  
  <script src="https://cdnjs.cloudflare.com/ajax/libs/datepair.js/0.4.14/datepair.min.js"></script>
-
+```
 ![data?command=webpalimage.download&web_na](__resources/pastiotr0UWRe_88.png)
 3. Insert an **events** node into any page. <br/>
 4. To render the calendar, apply templates for the events node, using mode **as-calendar**:
