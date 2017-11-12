@@ -30,9 +30,7 @@
   </xsl:template>
 
   <xsl:template match="events" mode="as-calendar">
-    <div id="wp-calendar"></div>
-    <script type="text/javascript" src="/resources/WebpalCalendar/js/calendar.js"/>
-    
+    <div id="wp-calendar" class="external-events"></div>    
   </xsl:template>
 
 </xsl:stylesheet>]]></stylesheet>
