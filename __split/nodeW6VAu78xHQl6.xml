@@ -3,9 +3,12 @@
 
   <complexType name="wpPage-230498234-Events" extends="wpPage">
     <element name="events" type="wpEvents" folder="extensions"/>
+    <element name="calendar" type="wpEventCalendarWidget" folder="extensions"/>
   </complexType>
   
   <complexType name="wpEvents" edittype="table" icon="calendar.png">
+    <attribute name="id" use="auto" type="wpString" value="wpEvents" />
+    <attribute name="name" use="required" type="wpName" value=""/>
     <element name="event" type="wpEvent"/>
   </complexType>
 
@@ -22,4 +25,9 @@
     <element name="description" type="wpHtml" use="optional"/>
   </complexType>
 
+  <complexType name="wpEventCalendarWidget">
+    <attribute name="id" use="auto" type="wpString" value="wpEvents" />
+    <attribute name="event-list-name" use="required" type="wpName" value=""/>
+  </complexType>
+  
 </schema>]]></node-schema>
