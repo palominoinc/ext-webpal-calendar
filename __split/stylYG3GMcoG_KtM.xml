@@ -30,7 +30,7 @@
   </xsl:template>
 
   <xsl:template match="events" mode="as-calendar">
-    <div id="wp-calendar" class="external-events"></div>    
+    <div id="wp-calendar" class="external-event"></div>    
   </xsl:template>
 
 </xsl:stylesheet>]]></stylesheet>

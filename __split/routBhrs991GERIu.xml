@@ -1,2 +1,2 @@
 <?xml version="1.0"?>
-<route controller="WebpalCalendar\Controllers\EventController@addRecord" filter="isLoggedIn" id="routBhrs991GERIu" name="addEvent" parameters="" pattern="/event/add" verb="post" webpalschematype="wpAppRoute"/>
+<route controller="WebpalCalendar\Controllers\EventController@addRecord" filter="" id="routBhrs991GERIu" name="addEvent" parameters="" pattern="/event/add" verb="post" webpalschematype="wpAppRoute"/>

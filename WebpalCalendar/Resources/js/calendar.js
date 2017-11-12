@@ -1,7 +1,7 @@
 /* ------ CALENDAR WIDGET ---------------
 *      more info at: http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/
 */
-jQuery(function($) {
+$(document).ready(function($) {
 
   const colorLabelTable = {
     red: 'Red',
