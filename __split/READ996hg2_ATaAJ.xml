@@ -1,33 +1,29 @@
 <?xml version="1.0"?>
-<README id="READ996hg2_ATaAJ" lang="any" webpalschematype="wpHtml"><h1>Events Calendar</h1>
-
-<p>This extension provides an<ch value="nbsp"/><strong>events</strong><ch value="nbsp"/>node and<ch value="nbsp"/>creates a database table<ch value="nbsp"/>which is used to store<ch value="nbsp"/>events.<ch value="nbsp"/></p>
-
-<p>Also provides a calendar widget to dynamically display these events, create new events and edit existing<ch value="nbsp"/>ones.</p>
-
-<p>Each event can be assigned to a certain level of access (1,2,3,4). A level of access is assigned to a user in webpal uder "Groups". If a user is a member of the group "Level 1", they will see only level 1 events. If a user is a member of the group "Level 2", they will see all events of both level 1 and 2. Same, for level 3 users and level 4 users, they will see all events that have a level less then or equal to the user's level.<ch value="nbsp"/></p>
-
-<h2>Usage</h2>
-
-<ol><li>After importing the extension, reload the WebPal UI.</li>
-	<li>Make sure to include dtaepicker,<ch value="nbsp"/>timepicker and datepair in the template of your site. Use this code:</li>
-</ol><p><ch value="nbsp"/> <ch value="nbsp"/> <ch value="lt"/>link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" type="text/css"/<ch value="gt"/><br/>
-<ch value="nbsp"/> <ch value="nbsp"/> <ch value="lt"/>link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.css" type="text/css"/<ch value="gt"/></p>
-
-<p><ch value="nbsp"/> <ch value="nbsp"/> <ch value="lt"/>script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.js"<ch value="gt"/><ch value="lt"/>/script<ch value="gt"/><br/>
-<ch value="nbsp"/> <ch value="nbsp"/> <ch value="lt"/>script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.js"<ch value="gt"/><ch value="lt"/>/script<ch value="gt"/><br/>
-<ch value="nbsp"/> <ch value="nbsp"/> <ch value="lt"/>script src="https://cdnjs.cloudflare.com/ajax/libs/datepair.js/0.4.14/datepair.min.js"<ch value="gt"/><ch value="lt"/>/script<ch value="gt"/></p>
-
-<p><img alt="data?command=webpalimage.download&amp;web_na" data-file-id="808065208658343817" src="808065208658343817"/></p>
-
-<ol start="3"><li>Insert an<ch value="nbsp"/><strong>events</strong><ch value="nbsp"/>node into any page.</li>
-	<li>To render the calendar, apply templates for the events node, using mode<ch value="nbsp"/><strong>as-calendar</strong>:<img alt="" data-file-id="2175079650824919" src="2175079650824919" style="vertical-align:bottom;" title="" width="500"/></li>
-	<li>The calendar widget will show up as such:</li>
-	<li>Enter information in the dialog box and click save</li>
-	<li>To edit and event just click on it</li>
-	<li>In the week view you can drag and release to specify the start and end time of the new event, but they can be changed<ch value="nbsp"/>in the dialog box that will show up after releasing the mouse button.</li>
-</ol><p>&#x200B;<img alt="data?command=webpalimage.download&amp;web_na" data-file-id="173621711716098674" src="173621711716098674"/></p>
-
-<ol><li>Click on any date to add an event</li></ol>
-
-</README>
+<README id="READ996hg2_ATaAJ" lang="any" webpalschematype="wpHtml">
+    <h1>Events Calendar</h1>
+    <p>This extension provides an<ch value="nbsp"/><strong>events</strong><ch value="nbsp"/>node and<ch value="nbsp"/>creates a database table<ch value="nbsp"/>which is used to store<ch value="nbsp"/>events.<ch value="nbsp"/></p>
+    <p>Also provides a calendar widget to dynamically display these events, create new events and edit existing<ch value="nbsp"/>ones.</p>
+    <p>Each event can be assigned to a certain level of access (1,2,3,4). A level of access is assigned to a user in webpal uder "Groups". If a user is a member of the group "Level 1", they will see only level 1 events. If a user is a member of the group "Level 2", they will see all events of both level 1 and 2. Same, for level 3 users and level 4 users, they will see all events that have a level less then or equal to the user's level.<ch value="nbsp"/></p>
+    <h2>Usage</h2>
+    <ol>
+      <li>After importing the extension, reload the WebPal UI.</li>
+      <li>Make sure to include dtaepicker,<ch value="nbsp"/>timepicker and datepair in the template of your site. Use this code:</li>
+    </ol>
+    <p><ch value="nbsp"/><ch value="nbsp"/><ch value="lt"/>link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" type="text/css"/<ch value="gt"/><br/><ch value="nbsp"/><ch value="nbsp"/><ch value="lt"/>link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.css" type="text/css"/<ch value="gt"/></p>
+    <p><ch value="nbsp"/><ch value="nbsp"/><ch value="lt"/>script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.js"<ch value="gt"/><ch value="lt"/>/script<ch value="gt"/><br/><ch value="nbsp"/><ch value="nbsp"/><ch value="lt"/>script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.11/jquery.timepicker.js"<ch value="gt"/><ch value="lt"/>/script<ch value="gt"/><br/><ch value="nbsp"/><ch value="nbsp"/><ch value="lt"/>script src="https://cdnjs.cloudflare.com/ajax/libs/datepair.js/0.4.14/datepair.min.js"<ch value="gt"/><ch value="lt"/>/script<ch value="gt"/></p>
+    <p>
+      <img alt="data?command=webpalimage.download&amp;web_na" data-file-id="808065208658343817" src="808065208658343817"/>
+    </p>
+    <ol start="3">
+      <li>Insert an<ch value="nbsp"/><strong>events</strong><ch value="nbsp"/>node into any page.</li>
+      <li>To render the calendar, apply templates for the events node, using mode<ch value="nbsp"/><strong>as-calendar</strong>:<img alt="" data-file-id="2175079650824919" src="2175079650824919" style="vertical-align:bottom;" title="" width="500"/></li>
+      <li>The calendar widget will show up as such:</li>
+      <li>Enter information in the dialog box and click save</li>
+      <li>To edit and event just click on it</li>
+      <li>In the week view you can drag and release to specify the start and end time of the new event, but they can be changed<ch value="nbsp"/>in the dialog box that will show up after releasing the mouse button.</li>
+    </ol>
+    <p>&#x200B;<img alt="data?command=webpalimage.download&amp;web_na" data-file-id="173621711716098674" src="173621711716098674"/></p>
+    <ol>
+      <li>Click on any date to add an event</li>
+    </ol>
+  </README>
