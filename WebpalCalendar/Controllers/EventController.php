@@ -43,6 +43,8 @@ class EventController extends BaseController
    */
   public function addRecord()
   {
+     $level = $this->getLevel();
+    if($level=5)
     return $this->updateEvent(new Event());
  }
   /**
@@ -166,6 +168,10 @@ class EventController extends BaseController
 
   private function getLevel(){
     $user = Connection::userInfo();
+    
+    if (mb_strpos( $user['groups'], 'Level 5') !== false) {
+      return 5;
+    };
 
     if (mb_strpos( $user['groups'], 'Level 4') !== false) {
       return 4;

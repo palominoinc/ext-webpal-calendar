@@ -20,7 +20,7 @@
 
   <xsl:template match="event" mode="as-json">
     {
-    title: '<xsl:value-of select="title"/>',
+    title: "<xsl:value-of select="title"/>",
     start: $.fullCalendar.moment('<xsl:value-of select="php:function('WPXSL::formatDate', @start-date)"/>T<xsl:value-of select="php:function('WPXSL::formatTime', @start-time)"/>'),
     end: $.fullCalendar.moment('<xsl:value-of select="php:function('WPXSL::formatDate', @end-date)"/>T<xsl:value-of select="php:function('WPXSL::formatTime', @end-time)"/>'),
     allDay: <xsl:value-of select="@all-day"/>,
@@ -31,7 +31,7 @@
 
   <xsl:template match="events" mode="as-calendar">
     <div id="wp-calendar"></div>
-    <script type="text/javascript" src="/resources/WebpalCalendar/js/calendar.js"/>
+<!--     <script type="text/javascript" src="/resources/WebpalCalendar/js/calendar.js"/> -->
     
   </xsl:template>
 

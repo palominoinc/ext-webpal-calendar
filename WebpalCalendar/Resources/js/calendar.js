@@ -85,7 +85,7 @@ jQuery(function($) {
       // is the "remove after drop" checkbox checked?
       if ($('#drop-remove').is(':checked')) {
         // if so, remove the element from the "Draggable Events" list
-        $(this).remove();
+       $(this).remove();
       }
 
     }
@@ -105,7 +105,10 @@ jQuery(function($) {
       };
 
       //generate modal dialog without delete button
-      initModal(event, false);
+      $.get("/userlevel", function(data,staus){ 
+         if(data.userLevel ==5)
+         initModal(event, false);
+        });
 
 
 
@@ -116,10 +119,19 @@ jQuery(function($) {
     eventClick: function(calEvent, jsEvent, view) {
 
       //generate modal dialog with delete button
-      initModal(calEvent, true);
-
+       $.get("/userlevel", function(data,staus){  
+         if(data.userLevel ==5)
+         initModal(calEvent, true);
+        });
+      
+ 
     }
+    
+    
   });
+  
+ 
+
 
   //-----------------------------------------------------------------------
   //----------------------------Functions----------------------------------
@@ -283,11 +295,12 @@ jQuery(function($) {
 
     modal += '"/> \
     </div> \
-    </div> \
-    <div class="form-group"> \
-    <label class="col-md-4 control-label" for="description">Description</label> \
-    <div class="col-md-4 input-group"> \
-    <textarea class="form-control" rows="4" cols="20" id="description" placeholder="Event description">';
+    </div> ';
+    //Removed Description textbox option for the event form
+    // <div class="form-group"> \
+    // <label class="col-md-4 control-label" for="description">Description</label> \
+    // <div class="col-md-4 input-group"> \
+    // <textarea class="form-control" rows="4" cols="20" id="description" placeholder="Event description">';
     if (!! event.description) {
       modal += event.description;
     }
@@ -381,9 +394,12 @@ jQuery(function($) {
     </div>\
     </div>\
     ';
-    return modal;
-  }
-
+    
+     return modal; 
+    
+  }  
+  
+  
   function setDisabledPropForTimeInputs (modal){
     if ( $("#allDayCheckbox").is(':checked')) {
         //disable time inputs
@@ -479,19 +495,28 @@ jQuery(function($) {
       //hide the dialog
       modal.remove();
       $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
     });
 
     //on close
     modal.modal('show').on('hidden', function() {
+      // $(modal).modal('hide');
+      // $(document.body).removeClass('modal-open');
+      $('.modal-backdrop').remove();
       modal.remove();
     });
+    
+   
 
     //if hidden - remove
     modal.on('hide.bs.modal', function(e) {
       if (e.target === this) {
-        $('body').removeClass('modal-open');
+        // $(modal).modal('hide');
+        $(document.body).removeClass('modal-open');
+          $('.modal-backdrop').remove();
         modal.remove();
       }
+      
     });
 
     if (needDeleteButton) {
@@ -517,4 +542,12 @@ jQuery(function($) {
       });
     }
   }
+  //quick fix for events not displaying when calendar first loads
+    $(document).ready(function() {
+       $('.fc-agendaWeek-button').click();
+       $('.fc-month-button').click();
+    });
 })
+
+
+

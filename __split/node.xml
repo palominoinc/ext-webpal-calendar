@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <extension id="extea4UsUAUQDRdV" name="webpal-calendar" webpalschematype="wpExtension">
+  <resource-links id="resotSUU1pZx6uOt" __stub="yes"/>
   <resources id="reso4v8863pp7Dad" __stub="yes"/>
   <controllers id="contT69f9GhHxdG_" __stub="yes"/>
   <routes id="routASQHPMsjjsMS" __stub="yes"/>
