@@ -1,2 +1,5 @@
 **/.meta
 /node.xml
+#*
+*~
+.tern-port
